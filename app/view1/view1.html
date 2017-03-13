@@ -60,7 +60,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="team in teamList">
+					<tr ng-repeat="team in teamArray">
+						
 						<td>{{team.name}}</td>
 						<td>
 							<a href="#" ng-click='downloadTeamCSV({ filename: "team-data.csv", index: $index })'> 
