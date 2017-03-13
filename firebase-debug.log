@@ -1,0 +1,14 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\bin\firebase serve
+[debug] CLI Version:  3.4.0
+[debug] Platform:     win32
+[debug] Node Version: v7.5.0
+[debug] Time:         Sun Mar 12 2017 17:22:32 GMT-0700 (Pacific Daylight Time)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: C:\ng\PitchEvaluator
+[info] Public Directory: public
+[info] 
+[info] Server listening at: http://localhost:5000

@@ -41,9 +41,9 @@ angular
             for (var i = 0; i < $scope.teamList.length; i++) {
               //to make the simple team
               var curTeam = $scope.teamList[i];
-              var teamy = new Team(curTeam.name, curTeam.q1Val,
+              var teamy = new Team(curTeam.name, curTeam.product,curTeam.q1Val,
                 curTeam.q2Val, curTeam.q3Val, curTeam.q4Val,
-                curTeam.q5Val, 
+                curTeam.q8Val, 
                 curTeam.ovrAvg);
               teamsForCSV.push(teamy);
             }//end for loop
@@ -57,7 +57,7 @@ angular
                   //save each review as an object, from which you can grab field's
                   var rev = childSnapshot.val();
                   var fullEval = new Eval(rev.teamName, rev.user, rev.rank, rev.q1, rev.cmt1, 
-                    rev.q2, rev.cmt2, rev.q3, rev.cmt3, rev.q4, 
+                    rev.q2, rev.cmt2, rev.q3, rev.cmt3, rev.q4, rev.cmt4,
                     rev.q8, rev.cmt8);
                   fullCSV.push(fullEval);
                   tempTeam.push(fullEval);
@@ -146,13 +146,14 @@ angular
 
 //Team Class for Summary CSV w/o comments
   class Team {
-    constructor(name, q1, q2, q3, q4, 
+    constructor(name,product, q1, q2, q3, q4, 
       q5, TA) {
-      this.Team_Name = name;
-      this.Value_Prop = q1;
-      this.Q_and_A = q2;
-      this.Product_Market_Fit = q3;
-      this.Understands_Customers = q4;
+      this.Team_Name = name+' ('+product+')';
+      this[$rootScope.questionLabel[0]] = q1;
+      this[$rootScope.questionLabel[1]] = q2;
+      this[$rootScope.questionLabel[2]] = q3;
+      this[$rootScope.questionLabel[3]] = q4;
+      this[$rootScope.questionLabel[4]] = q5;
       this.Team_Average = TA;
 
     }
@@ -166,16 +167,16 @@ angular
       this.Team_Name = teamName;
       this.Reviewer = Reviewer;
       this.Rank = Rank;
-      this.Value_Prop = q1;
-      this.Value_Prop_Comments = q1c;
-      this.Q_and_A = q2;
-      this.Q_and_A_Comments = q2c;
-      this.Product_Market_Fit = q3;
-      this.Product_Market_Fit_Comments = q3c;
-      this.Understands_Customers = q4;
-      this.Understands_Customers_Comments = q4c;
-      this.Continue = q8;
-      this.Continue_Comments = q8c;
+      this[$rootScope.questionLabel[0]] = q1;
+      this[$rootScope.questionLabel[1]] = q2;
+      this[$rootScope.questionLabel[2]] = q3;
+      this[$rootScope.questionLabel[3]] = q4;
+      this[$rootScope.questionLabel[4]] = q8;
+      this[$rootScope.questionLabel[0]+"_Comments"] = q1c.replace(/\n/g,' // ');
+      this[$rootScope.questionLabel[1]+"_Comments"] = q2c.replace(/\n/g,' // ');
+      this[$rootScope.questionLabel[2]+"_Comments"] = q3c.replace(/\n/g,' // ');
+      this[$rootScope.questionLabel[3]+"_Comments"] = q4c.replace(/\n/g,' // ');
+      this[$rootScope.questionLabel[4]+"_Comments"] = q8c.replace(/\n/g,' // ');
     }
   }
 

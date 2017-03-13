@@ -49,6 +49,7 @@ angular
     messagingSenderId: "866109741450"
   };
     $rootScope.masterref = firebase.initializeApp($rootScope.fbconfig);
+	// bug bug merge questionstext and questionslabel into single structure
     $rootScope.questionsText=[
         "Problem/Need team is pursuing was clearly explained and understood",
         "The team has a good understanding of their target users and customers who would buy/use their solution.",
@@ -57,6 +58,7 @@ angular
         "Should the team pivot?",
         "Words of advice you would like to provide the team as they move forward?"
   ];
+  $rootScope.questionLabel=['problem/need','target customers','demo','compelling','pivot','advice'];
 
 //  firebase.initializeApp(config);
 	$rootScope.$watch(function(rootScope) {return rootScope.role},
