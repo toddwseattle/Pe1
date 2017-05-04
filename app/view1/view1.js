@@ -41,7 +41,7 @@ angular
             for (var i = 0; i < $scope.teamList.length; i++) {
               //to make the simple team
               var curTeam = $scope.teamList[i];
-              var teamy = new Team(curTeam.name, curTeam.product,curTeam.q1Val,
+              var teamy = new Team(curTeam.name, curTeam.product,curTeam.Rank,curTeam.q1Val,
                 curTeam.q2Val, curTeam.q3Val, curTeam.q4Val,
                 curTeam.q8Val, 
                 curTeam.ovrAvg);
@@ -146,9 +146,10 @@ angular
 
 //Team Class for Summary CSV w/o comments
   class Team {
-    constructor(name,product, q1, q2, q3, q4, 
+    constructor(name,product,rank, q1, q2, q3, q4, 
       q5, TA) {
       this.Team_Name = name+' ('+product+')';
+      this.Rank=rank;
       this[$rootScope.questionLabel[0]] = q1;
       this[$rootScope.questionLabel[1]] = q2;
       this[$rootScope.questionLabel[2]] = q3;
