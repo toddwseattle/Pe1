@@ -15,13 +15,12 @@
 			<table class="table">
 				<thead>
 					<tr class="row">
-						<td class="table-teamname">Team</td>			
+						<td class="table-teamname">Team</td>
 						<td class="table-rank">Rank</td>
 						<td class="table-qval">Q1</td>
 						<td class="table-qval">Q2</td>
 						<td class="table-qval">Q3</td>
 						<td class="table-qval">Q4</td>
-						<td class="table-continue">Pivot?</td>
 						<td class="table-ovravg">Avg</td>
 					</tr>
 				</thead>
@@ -35,7 +34,6 @@
 						<td class="table-qval">{{team.q2Val}}</td>
 						<td class="table-qval">{{team.q3Val}}</td>
 						<td class="table-qval">{{team.q4Val}}</td>
-						<td class="table-continue">{{team.cont}}</td>	
 						<td class="table-ovravg">{{team.ovrAvg}}</td>
 
 				</tbody>
@@ -47,7 +45,6 @@
 						<td class="table-qval">{{averagesArray[2].$value}}</td>
 						<td class="table-qval">{{averagesArray[3].$value}}</td>
 						<td class="table-qval">{{averagesArray[4].$value}}</td>
-						<td class="table-continue">{{averagesArray[8].$value}}</td>
 						<td class="table-ovravg">{{averagesArray[0].$value}}</td>
 					</tr>
 				</tbody>
@@ -73,7 +70,7 @@
 			<h3 class="judge-page-h3">Question Legend</h3>
 			<ul>
 				<li ng-repeat="q in questionsText">Q{{$index+1}} {{q}}</li>
-			</ul>		
+			</ul>
 		</div>
 	</div>
 

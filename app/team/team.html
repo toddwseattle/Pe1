@@ -16,8 +16,7 @@
 						<th class="table-qval metric">Q2</th>
 						<th class="table-qval metric">Q3</th>
 						<th class="table-qval metric">Q4</th>
-						<th class="table-qval metric">Pivot?</th>
-						<th class="table-qval metric">Overall</th>						
+						<th class="table-qval metric">Overall</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -28,7 +27,6 @@
 						<td class="table-qval value">{{review.q2}}</td>
 						<td class="table-qval value">{{review.q3}}</td>
 						<td class="table-qval value">{{review.q4}}</td>
-						<td class="table-qval value">{{review.cont}}</td>
 						<td class="table-qval value">{{review.ovr}}</td>
 					</tr>
 				</tbody>
@@ -40,7 +38,6 @@
 						<td class="table-qval value">{{teamAvg.q2}}</td>
 						<td class="table-qval value">{{teamAvg.q3}}</td>
 						<td class="table-qval value">{{teamAvg.q4}}</td>
-						<td class="table-qval value">{{teamAvg.q8}}</td>
 						<td class="table-qval value">{{teamAvg.ovrAvg}}</td>
 					</tr>
 					<tr class="row table_row">
@@ -50,7 +47,6 @@
 						<td class="table-qval value">{{avg[2].$value}}</td>
 						<td class="table-qval value">{{avg[3].$value}}</td>
 						<td class="table-qval value">{{avg[4].$value}}</td>
-						<td class="table-qval value">{{avg[8].$value}}</td>
 						<td class="table-qval value">{{avg[0].$value}}</td>
 					</tr>
 				</tbody>
@@ -69,7 +65,7 @@
 					</ul>
 				</li>
 				<li>
-					<h4 class="question-text">Q2:{{questionsText[1]}}</h5>
+					<h4 class="question-text">Q2: {{questionsText[1]}}</h5>
 					<ul>
 						<li class="comment-text" ng-repeat="cmt in cmts2"><b>{{cmt.user}}</b>: {{cmt.comment}} </li>
 					</ul>
@@ -86,15 +82,15 @@
 						<li class="comment-text" ng-repeat="cmt in cmts4"><b>{{cmt.user}}</b>: {{cmt.comment}} </li>
 					</ul>
 				</li>
-				
-				
+
+
 				<li>
 					<h4 class="question-text">Q8: {{questionsText[4]}}</h5>
 					<ul>
 						<li class="comment-text" ng-repeat="cmt in cmts8"><b>{{cmt.user}}</b>: {{cmt.comment}} </li>
 					</ul>
-				</li>			
-			</ul>    		
+				</li>
+			</ul>
 		</div>
  	</div>
 </div>

@@ -51,14 +51,13 @@ angular
     $rootScope.masterref = firebase.initializeApp($rootScope.fbconfig);
 	// bug bug merge questionstext and questionslabel into single structure
     $rootScope.questionsText=[
-        "Problem/Need team is pursuing was clearly explained and understood",
-        "The team has a good understanding of their target users and customers who would buy/use their solution.",
-        "Demo addresses the problem/need/ adequately.",
-        "The overall pitch was *compelling* and left you wanting to learn more.",
-        "Should the team pivot?",
-        "Words of advice you would like to provide the team as they move forward?"
+        "Concise (less than 3 minutes) and informative interactive demo provided that linked value proposition to targeted customer",
+        "Questions answered concisely and accurately and feedback listened to",
+        "Team efforts to create awareness for launch are significant and effective",
+		"Team has good overall sense of next steps to optimize launch and engage/acquire customers/users",
+        "Any other comments or advice?"
   ];
-  $rootScope.questionLabel=['problem/need','target customers','demo','compelling','pivot','advice'];
+  $rootScope.questionLabel=['demo','questions','awareness','next steps','other comments'];
 
 //  firebase.initializeApp(config);
 	$rootScope.$watch(function(rootScope) {return rootScope.role},
