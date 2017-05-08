@@ -29,7 +29,7 @@ angular
 //          var teamsRef = new Firebase(session.ref+"/teams");
           var averagesRef = teamsRef.parent.child("averages");
           $scope.averagesArray = $firebaseArray(averagesRef);
-          
+
           $scope.teamArray = $firebaseArray(firebase.database().ref(session.ref).child("teams"));
 //          $scope.teamArray = $firebaseArray(new Firebase(session.ref+"/teams"));
           $scope.teamList = $firebaseArray(firebase.database().ref(session.ref).child("teams"));
@@ -41,9 +41,9 @@ angular
             for (var i = 0; i < $scope.teamList.length; i++) {
               //to make the simple team
               var curTeam = $scope.teamList[i];
-              var teamy = new Team(curTeam.name, curTeam.product,curTeam.Rank,curTeam.q1Val,
+              var teamy = new Team(curTeam.name, curTeam.product,curTeam.rank,curTeam.q1Val,
                 curTeam.q2Val, curTeam.q3Val, curTeam.q4Val,
-                curTeam.q8Val, 
+                curTeam.q8Val,
                 curTeam.ovrAvg);
               teamsForCSV.push(teamy);
             }//end for loop
@@ -56,7 +56,7 @@ angular
                 reviewsSnap.forEach(function(childSnapshot) {
                   //save each review as an object, from which you can grab field's
                   var rev = childSnapshot.val();
-                  var fullEval = new Eval(rev.teamName, rev.user, rev.rank, rev.q1, rev.cmt1, 
+                  var fullEval = new Eval(rev.teamName, rev.user, rev.rank, rev.q1, rev.cmt1,
                     rev.q2, rev.cmt2, rev.q3, rev.cmt3, rev.q4, rev.cmt4,
                     rev.q8, rev.cmt8);
                   fullCSV.push(fullEval);
@@ -88,7 +88,7 @@ angular
       console.log(ui.item.index());
 
     }// create a temporary attribute on the element with old index
-    
+
     $scope.dragEnd = function(e, ui) {
       console.log('dragend');
 
@@ -146,7 +146,7 @@ angular
 
 //Team Class for Summary CSV w/o comments
   class Team {
-    constructor(name,product,rank, q1, q2, q3, q4, 
+    constructor(name,product,rank, q1, q2, q3, q4,
       q5, TA) {
       this.Team_Name = name+' ('+product+')';
       this.Rank=rank;
@@ -162,8 +162,8 @@ angular
 
 //Eval Class for Summary CSV w/ Comments & Individual Team CSVs
   class Eval {
-    constructor(teamName, Reviewer, Rank, 
-      q1, q1c, q2, q2c, q3, q3c, q4, q4c, 
+    constructor(teamName, Reviewer, Rank,
+      q1, q1c, q2, q2c, q3, q3c, q4, q4c,
      q8, q8c) {
       this.Team_Name = teamName;
       this.Reviewer = Reviewer;
