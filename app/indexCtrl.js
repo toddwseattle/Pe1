@@ -42,12 +42,13 @@ angular
 	// userService.set('New Team');
 	// // END
     $rootScope.fbconfig = {
-    apiKey: "AIzaSyD9XgBYtKYFzKFChf7R8ZT6RU4k4AcoG3s",
-    authDomain: "pitchevaluator-e74d8.firebaseapp.com",
-    databaseURL: "https://pitchevaluator-e74d8.firebaseio.com",
-    storageBucket: "pitchevaluator-e74d8.appspot.com",
-    messagingSenderId: "866109741450"
-  };
+		apiKey: "AIzaSyCDEjDBQKJlWHKREkFYEVJUAPQ-12_tKkU",
+		authDomain: "nuvention-launch-17.firebaseapp.com",
+		databaseURL: "https://nuvention-launch-17.firebaseio.com",
+		projectId: "nuvention-launch-17",
+		storageBucket: "nuvention-launch-17.appspot.com",
+		messagingSenderId: "321803479039"
+	};
     $rootScope.masterref = firebase.initializeApp($rootScope.fbconfig);
 	// bug bug merge questionstext and questionslabel into single structure
     $rootScope.questionsText=[
