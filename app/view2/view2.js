@@ -136,7 +136,7 @@ angular
 		if (q4 != 0) {
 			review.update({q4: q4});
 		}
-		
+
 		if (q8 != undefined) {
 			review.update({q8: q8});
 		}
@@ -154,11 +154,6 @@ angular
 		}
 		if (cmt8 != "") {
 			review.update({cmt8: cmt8});
-		}
-		if (q1 != 0 && q2 != 0 && q3 != 0 && q4 != 0 ) {
-			var teamavg = (parseFloat(q1) + parseFloat(q2) + parseFloat(q3) + parseFloat(q4))/4.0;
-			teamavg = teamavg.toFixed(2);
-			review.update({teamavgval: teamavg});
 		}
 	}
 
@@ -221,7 +216,7 @@ angular
 
 
 
-	
+
 	var calcAvg = function(team) {
 		var q1, q2, q3, q4,q8, rank, teamavg;
 		var q1sum = 0;
