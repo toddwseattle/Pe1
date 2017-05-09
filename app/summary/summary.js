@@ -1,7 +1,7 @@
 'use strict';
 angular
   .module('PitchEvaluator')
-  .controller('View1Ctrl', function($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, loggedinCheck, teamService, userService, db_url) {
+  .controller('SummaryCtrl', function($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, loggedinCheck, teamService, userService, db_url) {
 
     loggedinCheck.check();
     if (!permissionsService.isPermitted('Overview')) {

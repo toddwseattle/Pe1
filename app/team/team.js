@@ -7,7 +7,7 @@ angular
 
     if (!permissionsService.isPermitted('TeamView')) {
       if ($rootScope.role == 'Admin'){
-          $location.path('view1');
+          $location.path('summary');
       }
       else if ($rootScope.role == 'Judge'){
           $location.path('judge');

@@ -5,10 +5,10 @@ angular
   .constant('db_url', "https://pitchevaluator.firebaseio.com")
   .config(function($routeProvider) {
     $routeProvider
-      .when('/view1', {
-        templateUrl: 'view1/view1.html',
-        controller: 'View1Ctrl',
-        css: 'view1/view1.css'
+      .when('/summary', {
+        templateUrl: 'summary/summary.html',
+        controller: 'SummaryCtrl',
+        css: 'summary/summary.css'
       })
       .when('/judge', {
         templateUrl: 'judge/judge.html',
@@ -46,6 +46,6 @@ angular
         css: 'newSession.css'
       })
       .otherwise({
-        redirectTo: 'view1'
+        redirectTo: 'summary'
       });
   });

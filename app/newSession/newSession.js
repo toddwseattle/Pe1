@@ -5,7 +5,7 @@ angular
 
     loggedinCheck.check();
     if (!permissionsService.isPermitted('newSession')) {
-      $location.path('view1');
+      $location.path('summary');
     }
 
     $scope.name = "";
@@ -33,7 +33,7 @@ angular
 
       $rootScope.session = $scope.name;
       $rootScope.sessionRef = refNew.toString();
-      $location.path('view1');
+      $location.path('summary');
 
       // console.log($scope.name);
       // console.log($scope.desc);

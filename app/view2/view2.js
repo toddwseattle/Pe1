@@ -6,7 +6,7 @@ angular
 	loggedinCheck.check();
 
 	if (!permissionsService.isPermitted('Review')) {
-		$location.path('view1');
+		$location.path('summary');
 	}
 
 	$scope.toggleText= [];
@@ -480,7 +480,7 @@ angular
 		function redirect() {
 			var role = $rootScope.role;
 			if (role=="Admin") {
-				$location.path('view1')
+				$location.path('summary')
 			}
 			else if (role=="Judge") {
 				$location.path('judge')
