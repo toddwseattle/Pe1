@@ -148,11 +148,6 @@ angular
 		if (cmt8 != "") {
 			review.update({cmt8: cmt8});
 		}
-		if (q1 != 0 && q2 != 0 && q3 != 0 && q4 != 0 ) {
-			var teamavg = (parseFloat(q1) + parseFloat(q2) + parseFloat(q3) + parseFloat(q4))/4.0;
-			teamavg = teamavg.toFixed(2);
-			review.update({teamavgval: teamavg});
-		}
 	}
 
 
