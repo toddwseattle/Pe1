@@ -106,7 +106,7 @@ angular
   class Team {
     constructor(name,product,rank, q1, q2, q3, q4, TA) {
       this.Team_Name = name+' ('+product+')';
-      this.Rank=rank;
+      this.rank=rank;
       this[$rootScope.questionLabel[0]] = q1;
       this[$rootScope.questionLabel[1]] = q2;
       this[$rootScope.questionLabel[2]] = q3;
