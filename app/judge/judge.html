@@ -6,7 +6,6 @@
 		<div class="col-sm-9">
 			<img src="judge/Cursor-Move-512.png" id="drag-reminder-img">
 			<h4 id="drag-reminder"><strong>Drag and drop to stack rank the teams!</strong></h4>
-			<p ng-show="checking">(Unfortunately, this feature is only functional with a mouse at the moment (no touch-screen dragging/dropping).</p>
 		</div>
 	</div>
 
@@ -15,7 +14,8 @@
 			<table class="table">
 				<thead>
 					<tr class="row">
-						<td class="table-teamname">Team</td>			
+						<td></td>
+						<td class="table-teamname">Team</td>
 						<td class="table-rank">Rank</td>
 						<td class="table-qval">Q1</td>
 						<td class="table-qval">Q2</td>
@@ -26,7 +26,8 @@
 					</tr>
 				</thead>
 				<tbody id="sortable">
-					<tr class="row table_row dragable" ng-class="teamClasses[team.rank-1]" ng-repeat="team in reviewedTeams | orderBy:'rank'">
+					<tr class="row table_row" ng-class="teamClasses[team.rank-1]" ng-repeat="team in reviewedTeams | orderBy:'rank'">
+						<td class="drag-handle"></td>
 						<td class="table-teamname">
 							<a ng-class="teamClasses[team.rank-1]" href="" ng-click="saveTeam(team.name)">{{team.name}} ({{team.product}})</a>
 						</td>
@@ -35,12 +36,13 @@
 						<td class="table-qval">{{team.q2Val}}</td>
 						<td class="table-qval">{{team.q3Val}}</td>
 						<td class="table-qval">{{team.q4Val}}</td>
-						<td class="table-continue">{{team.cont}}</td>	
+						<td class="table-continue">{{team.cont}}</td>
 						<td class="table-ovravg">{{team.ovrAvg}}</td>
-
+					</tr>
 				</tbody>
-				<tbody>
-					<tr class="row table_row dragable">
+				<tfoot>
+					<tr class="row table_row">
+						<td></td>
 						<td class="table-teamname">Class Average</td>
 						<td class="table-qval">Rank</td>
 						<td class="table-qval">{{averagesArray[1].$value}}</td>
@@ -50,7 +52,7 @@
 						<td class="table-continue">{{averagesArray[8].$value}}</td>
 						<td class="table-ovravg">{{averagesArray[0].$value}}</td>
 					</tr>
-				</tbody>
+				</tfoot>
 			</table>
 		</div>
 	</div>
@@ -73,7 +75,7 @@
 			<h3 class="judge-page-h3">Question Legend</h3>
 			<ul>
 				<li ng-repeat="q in questionsText">Q{{$index+1}} {{q}}</li>
-			</ul>		
+			</ul>
 		</div>
 	</div>
 
