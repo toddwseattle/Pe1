@@ -20,10 +20,10 @@ angular
         controller: 'TeamCtrl',
         css: 'team/team.css'
       })
-      .when('/view2', {
-        templateUrl: 'view2/view2.html',
-        controller: 'View2Ctrl',
-        css : 'view2/view2.css'
+      .when('/review', {
+        templateUrl: 'review/review.html',
+        controller: 'ReviewCtrl',
+        css : 'review/review.css'
       })
       .when('/addTeam', {
         templateUrl: 'addTeam/addTeam.html',

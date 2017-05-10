@@ -62,7 +62,7 @@ Table 1. View  folders
 |**login**       | Login page             | /login      |
 |**newSession**  | Session creation page  | /newSession |
 |**summary**     | Class summary          | /summary    |
-|**view2**       | Review submission page | /view 2     |
+|**review**      | Review submission page | /review     |
 |**judge**       | Judge ratings summary  | /judge      |
 |**team**        | Team summary page      | /team       |
 

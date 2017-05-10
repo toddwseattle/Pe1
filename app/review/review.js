@@ -1,7 +1,7 @@
 'use strict';
 angular
 .module('PitchEvaluator')
-.controller('View2Ctrl', function($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, teamService, loggedinCheck) {
+.controller('ReviewCtrl', function($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, teamService, loggedinCheck) {
 
 	loggedinCheck.check();
 

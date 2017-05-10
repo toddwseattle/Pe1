@@ -75,7 +75,7 @@ angular
 				$scope.user = $rootScope.user;
 				$scope.tabs = [
 	      	{ link : '/judge', label : 'Overview' },
-	      	{ link : '/view2', label : 'Review Teams' },
+	      	{ link : '/review', label : 'Review Teams' },
 					{ link : '/summary', label : 'Summary' }
 		    ];
 			}
