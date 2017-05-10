@@ -21,8 +21,7 @@
 
 .drag-handle {
 	cursor: move;
-	background: url('drag_handle.png') no-repeat center;
-	display: none;
+	background: none;
 }
 
 #drag-reminder-img {
@@ -44,6 +43,6 @@
 
 @media screen and (max-width: 768px) {
 	.drag-handle {
-		display: table-cell;
+		background: url('drag_handle.png') no-repeat center;
 	}
 }
