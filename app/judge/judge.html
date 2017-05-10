@@ -28,7 +28,7 @@
 				<tbody id="sortable">
 					<tr class="row table_row dragable" ng-class="teamClasses[team.rank-1]" ng-repeat="team in reviewedTeams | orderBy:'rank'">
 						<td class="table-teamname">
-							<a ng-class="teamClasses[team.rank-1]" href="" ng-click="saveTeam(team.name)">{{team.name}}</a>
+							<a ng-class="teamClasses[team.rank-1]" href="" ng-click="saveTeam(team.name)">{{team.name}} ({{team.product}})</a>
 						</td>
 						<td class="table-rank">{{team.rank}}</td>
 						<td class="table-qval">{{team.q1Val}}</td>
