@@ -73,6 +73,7 @@ angular
                 teamID: team.$id,
                 reviewID: review.$id,
                 name: team.name,
+                product: team.product,
                 q1Val: review.q1,
                 q2Val: review.q2,
                 q3Val: review.q3,
