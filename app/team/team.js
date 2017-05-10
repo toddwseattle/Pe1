@@ -7,7 +7,7 @@ angular
 
     if (!permissionsService.isPermitted('TeamView')) {
       if ($rootScope.role == 'Admin'){
-          $location.path('view1');
+          $location.path('summary');
       }
       else if ($rootScope.role == 'Judge'){
           $location.path('judge');
@@ -41,7 +41,6 @@ angular
       $scope.teamAvg.q2 = team.q2Val;
       $scope.teamAvg.q3 = team.q3Val;
       $scope.teamAvg.q4 = team.q4Val;
-      $scope.teamAvg.q8 = team.q8Val;
       $scope.teamAvg.rank = team.rank;
       $scope.teamAvg.ovrAvg = team.ovrAvg;
     });
@@ -69,10 +68,10 @@ angular
         if (check(review.cmt2)) {
           $scope.cmts2.push({user:review.user,comment: review.cmt2});
         }
-       
+
         if (check(review.cmt3)) {
           $scope.cmts3.push({user:review.user,comment: review.cmt3});
-        } 
+        }
 
         if (check(review.cmt4)) {
           $scope.cmts4.push({user:review.user,comment: review.cmt4});
@@ -86,13 +85,6 @@ angular
         var sum = (parseFloat(review.q1) + parseFloat(review.q2) + parseFloat(review.q3) + parseFloat(review.q4));
         review.ovr = (sum/4.0);
         review.ovr = (review.ovr).toFixed(2);
- 
-        if (review.q8 == 1) {
-          review.cont = "Yes";
-        } else {
-          review.cont = "No";
-        }
-
       });
     });
   })

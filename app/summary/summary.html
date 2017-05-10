@@ -11,13 +11,12 @@
 			<table class="table">
 				<thead>
 					<tr class="row">
-						<td class="table-teamname">Team</td>		
+						<td class="table-teamname">Team</td>
 						<td class="table-rank">Rank</td>
 						<td class="table-qval">Q1</td>
 						<td class="table-qval">Q2</td>
 						<td class="table-qval">Q3</td>
 						<td class="table-qval">Q4</td>
-						<td class="table-continue">Pivot?</td>
 						<td class="table-ovravg">Avg</td>
 					</tr>
 				</thead>
@@ -31,7 +30,6 @@
 						<td class="table-qval">{{team.q2Val}}</td>
 						<td class="table-qval">{{team.q3Val}}</td>
 						<td class="table-qval">{{team.q4Val}}</td>
-						<td class="table-continue">{{team.q8Val}}</td>				
 						<td class="table-ovravg">{{team.ovrAvg}}</td>
 					</tr>
 				</tbody>
@@ -43,7 +41,6 @@
 						<td class="table-qval">{{averagesArray[2].$value}}</td>
 						<td class="table-qval">{{averagesArray[3].$value}}</td>
 						<td class="table-qval">{{averagesArray[4].$value}}</td>
-						<td class="table-continue">{{averagesArray[8].$value}}</td>
 						<td class="table-ovravg">{{averagesArray[0].$value}}</td>
 					</tr>
 				</tbody>
@@ -61,17 +58,17 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="team in teamArray">
-						
+
 						<td>{{team.name}}</td>
 						<td>
-							<a href="#" ng-click='downloadTeamCSV({ filename: "team-data.csv", index: $index })'> 
+							<a href="#" ng-click='downloadTeamCSV({ filename: "team-data.csv", index: $index })'>
 								<p>Download {{team.name}} data</p>
 							</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-		</div>	
+		</div>
 		<div class="col-sm-3">
 			<button type="button" class="btn btn-primary btn-download" ng-click='downloadCSV({ filename: "summary-data.csv" })'>
 				<span id="download_text">Download</span>

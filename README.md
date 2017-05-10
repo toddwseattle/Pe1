@@ -2,7 +2,7 @@
 
 ###### URL: http://pitchevaluator.herokuapp.com/
 
-###### For a backlog of known issues and bugs, please see the associated Waffle.io for this repository: 
+###### For a backlog of known issues and bugs, please see the associated Waffle.io for this repository:
 ###### https://waffle.io/eecs394-s16/PitchEvaluator
 
 ## Description
@@ -61,17 +61,17 @@ Table 1. View  folders
 |**addTeam**     | Team creation page     | /addTeam    |
 |**login**       | Login page             | /login      |
 |**newSession**  | Session creation page  | /newSession |
-|**view1**       | Class summary          | /view1      | 
-|**view2**       | Review submission page | /view 2     |
+|**summary**     | Class summary          | /summary    |
+|**review**      | Review submission page | /review     |
 |**judge**       | Judge ratings summary  | /judge      |
 |**team**        | Team summary page      | /team       |
- 
+
  Table 2. Other folders
 
 | Other Folders          | Description    |
 |:-----------------------|:--------------:|
-| **services**           | All the service files | 
-| **bower_components**   | includes AngularJS dependencies | 
+| **services**           | All the service files |
+| **bower_components**   | includes AngularJS dependencies |
 
 
 

@@ -42,23 +42,23 @@ angular
 	// userService.set('New Team');
 	// // END
     $rootScope.fbconfig = {
-    apiKey: "AIzaSyD9XgBYtKYFzKFChf7R8ZT6RU4k4AcoG3s",
-    authDomain: "pitchevaluator-e74d8.firebaseapp.com",
-    databaseURL: "https://pitchevaluator-e74d8.firebaseio.com",
-    storageBucket: "pitchevaluator-e74d8.appspot.com",
-    messagingSenderId: "866109741450"
-  };
+		apiKey: "AIzaSyCDEjDBQKJlWHKREkFYEVJUAPQ-12_tKkU",
+		authDomain: "nuvention-launch-17.firebaseapp.com",
+		databaseURL: "https://nuvention-launch-17.firebaseio.com",
+		projectId: "nuvention-launch-17",
+		storageBucket: "nuvention-launch-17.appspot.com",
+		messagingSenderId: "321803479039"
+	};
     $rootScope.masterref = firebase.initializeApp($rootScope.fbconfig);
 	// bug bug merge questionstext and questionslabel into single structure
     $rootScope.questionsText=[
-        "Problem/Need team is pursuing was clearly explained and understood",
-        "The team has a good understanding of their target users and customers who would buy/use their solution.",
-        "Demo addresses the problem/need/ adequately.",
-        "The overall pitch was *compelling* and left you wanting to learn more.",
-        "Should the team pivot?",
-        "Words of advice you would like to provide the team as they move forward?"
+        "Concise (less than 3 minutes) and informative interactive demo provided that linked value proposition to targeted customer",
+        "Questions answered concisely and accurately and feedback listened to",
+        "Team efforts to create awareness for launch are significant and effective",
+		"Team has good overall sense of next steps to optimize launch and engage/acquire customers/users",
+        "Any other comments or advice?"
   ];
-  $rootScope.questionLabel=['problem/need','target customers','demo','compelling','pivot','advice'];
+  $rootScope.questionLabel=['demo','questions','awareness','next steps','other comments'];
 
 //  firebase.initializeApp(config);
 	$rootScope.$watch(function(rootScope) {return rootScope.role},
@@ -66,7 +66,7 @@ angular
 			if ($rootScope.role == 'Admin') {
 				$scope.user = $rootScope.user;
 				$scope.tabs = [
-	      	{ link : '/view1', label : 'Overview' },
+	      	{ link : '/summary', label : 'Overview' },
 	      	{ link : '/addTeam', label : 'Add a Team' },
 			{ link : '/newSession', label : 'Create a New Session'},
 		    ];
@@ -75,8 +75,8 @@ angular
 				$scope.user = $rootScope.user;
 				$scope.tabs = [
 	      	{ link : '/judge', label : 'Overview' },
-	      	{ link : '/view2', label : 'Review Teams' },
-					{ link : '/view1', label : 'Summary' }
+	      	{ link : '/review', label : 'Review Teams' },
+					{ link : '/summary', label : 'Summary' }
 		    ];
 			}
 			else {

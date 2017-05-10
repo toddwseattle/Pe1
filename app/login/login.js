@@ -12,7 +12,7 @@ angular
     $scope.warning = false;
     $scope.loadingSessions = true;
     if ($rootScope.loggedin) {
-      $location.path('view1');
+      $location.path('summary');
     }
 //    var sessRef = new Firebase(db_url + "/sessionList");
 firebase.auth().signInAnonymously().catch(function(error) {
@@ -50,13 +50,13 @@ firebase.auth().signInAnonymously().catch(function(error) {
 			$scope.login();
 		}
 	});
-	
+
 	$("#passfield").keypress(function(e) {
 		if(e.which == 13) {
 			$scope.login();
 		}
 	});
-	
+
     $scope.login = function() {
       // console.log("user:",$scope.user);
       // console.log("pass:",$scope.pass);
@@ -112,7 +112,7 @@ firebase.auth().signInAnonymously().catch(function(error) {
           temp.forEach(function(session) {
             if (session.name==$scope.session) {
               var ref = firebase.database().ref(session.ref).child("teams");
-              
+
               //var ref = new Firebase(session.ref+'/teams');
               var teams = new $firebaseArray(ref);
               teams.$loaded(function() {
@@ -142,7 +142,7 @@ firebase.auth().signInAnonymously().catch(function(error) {
       function redirect() {
   			var role = $rootScope.role;
   			if (role=="Admin") {
-  				$location.path('view1')
+  				$location.path('summary')
   			}
   			else if (role=="Judge") {
   				$location.path('judge')

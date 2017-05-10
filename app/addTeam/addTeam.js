@@ -5,7 +5,7 @@ angular
 
     loggedinCheck.check();
     if (!permissionsService.isPermitted('addTeam')) {
-      $location.path('view1');
+      $location.path('summary');
     }
 
     $scope.name = "";
@@ -68,7 +68,7 @@ angular
           else {
             $scope.warning = false;
             ref.child('teams').push(newTeam);
-            $location.path('#/view1');
+            $location.path('#/summary');
           }
         });
       });
@@ -86,7 +86,7 @@ angular
       //       var key = sessArr.$keyAt(session);
       //       var specificSession = new Firebase(ref + "/" + key);
       //       specificSession.child('teams').push(newTeam);
-      //       $location.path('#/view1');
+      //       $location.path('#/summary');
       //     }
       //   });
       // });
@@ -94,7 +94,7 @@ angular
       // console.log($scope.name);
       // console.log($scope.product);
       // console.log($scope.desc);
-      // $location.path('#/view1');
+      // $location.path('#/summary');
     }
 
   });

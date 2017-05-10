@@ -14,14 +14,13 @@
 							<!-- <option ng-hide="loadingTeams" ng-repeat="team in teams" ng-value="{{team.name}}">{{team.name}}</option> -->
 						</select>
 					</div>
-					<div class="col-sm-6"> 
+					<div class="col-sm-6">
 						(1 = strongly disagree, 7 = strongly agree)
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-sm-12">
-						<h3><b>Trade Show/Demo</b></h3>
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="panel-title">{{questionsText[0]}}</h3>
@@ -56,7 +55,6 @@
 						   		</fieldset>
 							</div>
 						</div>
-						<h3><b>Pitch</b></h3>
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="panel-title">{{questionsText[2]}}</h3>
@@ -91,31 +89,15 @@
 						   		</fieldset>
 							</div>
 						</div>
-						
-						
-						
+
+
+
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="panel-title">{{questionsText[4]}}</h3>
 							</div>
 							<div class="panel-body">
-						   		<fieldset>
-						   			<label class="radio-inline">
-						   				<input name="q8radio" type="radio" value="1">
-						   				Yes
-						   			</label>
-						   			<label class="radio-inline">
-						   				<input name="q8radio" type="radio"  value="0">
-						   				No
-						   			</label>
-										<div class="input-textarea">
-											<button class="btn btn-primary btn_comments(8) btn_cmt" ng-click="showComment(8)">{{toggleText[8]}}</button>
-										</div>
-							   		<div class="input-textarea" ng-show="checkComment(8)">
-							   			<label for="q8textarea">{{questionsText[5]}}</label>
-							   			<textarea class="form-control" id="q8textarea" rows="1"></textarea>
-							   		</div>
-						   		</fieldset>
+								<textarea class="form-control" id="q8textarea" rows="1"></textarea>
 						   	</div>
 					    </div>
 					</div>
