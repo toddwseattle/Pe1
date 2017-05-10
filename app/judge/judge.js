@@ -175,11 +175,17 @@ angular
       // }
     }
 
-    $('#sortable').sortable({
+    var sortableOptions = {
       start: $scope.dragStart,
-      update: $scope.dragEnd,
-      delay: 1000
-    });
+      update: $scope.dragEnd
+    };
+
+    // Drag and drop only with the handle on small screens
+    if (matchMedia("screen and (max-width: 768px)").matches) {
+      sortableOptions.handle = '.drag-handle';
+    }
+
+    $('#sortable').sortable(sortableOptions);
 
     var calcAvgRank = function(team) {
       var rank;
