@@ -14,7 +14,7 @@ angular
     $scope.teamClasses = [];
     $scope.saveTeam = function(teamName) {
       teamService.set(teamName);
-      $location.path('view2');
+      $location.path('review');
     }
 
     function rankings() {

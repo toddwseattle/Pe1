@@ -4,7 +4,7 @@ angular
 .controller('TabsCtrl', function($rootScope, $scope, $location) {
 	$scope.tabs = [
       { link : '/summary', label : 'Summary' },
-      { link : '/view2', label : 'Evaluation Form' },
+      { link : '/review', label : 'Evaluation Form' },
       { link : '/addTeam', label : 'Add Team' },
       { link : '/judgeInfo', label : 'judgeInfo' },
       { link : '/judgeLogin', label : 'judgeLogin' },
