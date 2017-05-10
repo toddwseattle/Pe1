@@ -1,12 +1,12 @@
 'use strict';
 angular
 .module('PitchEvaluator')
-.controller('View2Ctrl', function($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, teamService, loggedinCheck) {
+.controller('ReviewCtrl', function($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, teamService, loggedinCheck) {
 
 	loggedinCheck.check();
 
 	if (!permissionsService.isPermitted('Review')) {
-		$location.path('view1');
+		$location.path('summary');
 	}
 
 	$scope.toggleText= [];
@@ -25,20 +25,37 @@ angular
 	$scope.selectedTeam=null;
 	var curTeamName, curTeamIndex, curTeamKey, curTeamObject, curTeamRef;
 	var q1, q2, q3, q4, q5, q6, q7, q8, cmt1, cmt2, cmt3, cmt4, cmt5, cmt6, cmt7, cmt8;
-	var graderName, teamCheck;
-	var valid = false;
+	var graderName;
+	var dirty = false;
 
 	if (teamService.get()) {
 		teamList.$loaded(function() {
 			$scope.selectedTeam=teamService.get();
 			teamService.set(null);
-			getData($scope.selectedTeam);
+			getData();
 		});
 	}
 
+	$(".ratingslider").slider({
+		min: 0,
+		step: 1,
+		max: 7,
+		value: 0,
+		stop: function () { dirty = true; }
+	}).each(function () {
+		var opt = $(this).data().uiSlider.options;
+		var vals = opt.max - opt.min;
+		for (var i = 0; i <= vals; i++) {
+			var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i / vals * 100) + '%');
+			$(this).append(el);
+		}
+	});
+
 	$scope.$watch(function(scope) {return scope.selectedTeam},
-		function(oldValue, newValue) {
-			getData(newValue);
+		function(newValue, oldValue) {
+			// Don't update values if the user has made any changes
+			if (dirty) return;
+			getData();
 		});
 
 	var commentShowings = {
@@ -60,10 +77,10 @@ angular
 		$scope.toggleText[num] = commentShowings[num] ? 'Hide Comment' : 'Add Comment';
 	}
 
-	function getData(name) {
+	function getData() {
 		//@TODO: Change this user to the correct one
 		var user = $rootScope.user;
-		var booly = false;
+		var reviewFound = false;
 		for (var team of teamList) {
 			if (team.name==$scope.selectedTeam) {
 				var teamRef=firebase.database().ref($rootScope.sessionRef+"/teams/"+team.$id);
@@ -75,13 +92,13 @@ angular
 							if (review.user == user) {
 								// console.log(review);
 								updateValues(review);
-								booly = true;
+								reviewFound = true;
 								return review;
 							}
 						}
 					});
 				}
-				if (!booly) {
+				if (!reviewFound) {
 					resetValues();
 				}
 				break;
@@ -90,10 +107,8 @@ angular
 	}
 
 	function resetValues() {
-		$("#q1slider").slider( "option", "value", 0 );
-		$("#q2slider").slider( "option", "value", 0 );
-		$("#q3slider").slider( "option", "value", 0 );
-		$("#q4slider").slider( "option", "value", 0 );
+		dirty = false;
+		$(".ratingslider").slider( "option", "value", 0 );
 
 		$('input[name="q8radio"]').val([null]);
 
@@ -105,6 +120,7 @@ angular
 	}
 
 	function updateValues(review) {
+		dirty = false;
 		$("#q1slider").slider( "option", "value", review.q1 );
 		$("#q2slider").slider( "option", "value", review.q2 );
 		$("#q3slider").slider( "option", "value", review.q3 );
@@ -136,7 +152,7 @@ angular
 		if (q4 != 0) {
 			review.update({q4: q4});
 		}
-		
+
 		if (q8 != undefined) {
 			review.update({q8: q8});
 		}
@@ -155,73 +171,8 @@ angular
 		if (cmt8 != "") {
 			review.update({cmt8: cmt8});
 		}
-		if (q1 != 0 && q2 != 0 && q3 != 0 && q4 != 0 ) {
-			var teamavg = (parseFloat(q1) + parseFloat(q2) + parseFloat(q3) + parseFloat(q4))/4.0;
-			teamavg = teamavg.toFixed(2);
-			review.update({teamavgval: teamavg});
-		}
 	}
 
-
-	$("#q1slider").slider({
-		min: 0,
-		step: 1,
-		max: 7,
-		value: 0
-	}).each(function() {
-		var opt = $(this).data().uiSlider.options;
-		var vals = opt.max - opt.min;
-		for (var i = 0; i <= vals; i++) {
-			var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
-			$("#q1slider").append(el);
-		}
-	});
-
-	$("#q2slider").slider({
-		min: 0,
-		step: 1,
-		max: 7,
-		value: 0
-	}).each(function() {
-		var opt = $(this).data().uiSlider.options;
-		var vals = opt.max - opt.min;
-		for (var i = 0; i <= vals; i++) {
-			var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
-			$("#q2slider").append(el);
-		}
-	});
-
-	$("#q3slider").slider({
-		min: 0,
-		step: 1,
-		max: 7,
-		value: 0
-	}).each(function() {
-		var opt = $(this).data().uiSlider.options;
-		var vals = opt.max - opt.min;
-		for (var i = 0; i <= vals; i++) {
-			var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
-			$("#q3slider").append(el);
-		}
-	});
-
-	$("#q4slider").slider({
-		min: 0,
-		step: 1,
-		max: 7,
-		value: 0
-	}).each(function() {
-		var opt = $(this).data().uiSlider.options;
-		var vals = opt.max - opt.min;
-		for (var i = 0; i <= vals; i++) {
-			var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
-			$("#q4slider").append(el);
-		}
-	});
-
-
-
-	
 	var calcAvg = function(team) {
 		var q1, q2, q3, q4,q8, rank, teamavg;
 		var q1sum = 0;
@@ -504,7 +455,7 @@ angular
 		function redirect() {
 			var role = $rootScope.role;
 			if (role=="Admin") {
-				$location.path('view1')
+				$location.path('summary')
 			}
 			else if (role=="Judge") {
 				$location.path('judge')

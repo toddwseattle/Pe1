@@ -66,7 +66,7 @@ angular
 			if ($rootScope.role == 'Admin') {
 				$scope.user = $rootScope.user;
 				$scope.tabs = [
-	      	{ link : '/view1', label : 'Overview' },
+	      	{ link : '/summary', label : 'Overview' },
 	      	{ link : '/addTeam', label : 'Add a Team' },
 			{ link : '/newSession', label : 'Create a New Session'},
 		    ];
@@ -75,8 +75,8 @@ angular
 				$scope.user = $rootScope.user;
 				$scope.tabs = [
 	      	{ link : '/judge', label : 'Overview' },
-	      	{ link : '/view2', label : 'Review Teams' },
-					{ link : '/view1', label : 'Summary' }
+	      	{ link : '/review', label : 'Review Teams' },
+					{ link : '/summary', label : 'Summary' }
 		    ];
 			}
 			else {
