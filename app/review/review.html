@@ -1,141 +1,62 @@
 <div class="container-fluid">
-<div class="row">
-	<div class="col-sm-12">
-		<div id="form" class="row">
-			<form class="col-sm-12">
-				<div id="teams-list" class="row">
+	<div class="row">
+		<form>
+			<div id="teams-list" class="row col-sm-12">
+				<div class="col-sm-6">
+					<h4>Currently grading:</h4>
 
-					<div class="col-sm-6">
-						<h4>Currently grading:</h4>
-
-						<select id="team-select" class="form-control" ng-model="selectedTeam" ng-options="team.name as team.name for team in teams">
-							<option ng-show="loadingTeams" disabled selected>Loading...</option>
-							<option ng-hide="loadingTeams" disabled selected value="">Pick a team</option>
-							<!-- <option ng-hide="loadingTeams" ng-repeat="team in teams" ng-value="{{team.name}}">{{team.name}}</option> -->
-						</select>
-					</div>
-					<div class="col-sm-6"> 
-						(1 = strongly disagree, 7 = strongly agree)
-					</div>
+					<select id="team-select" class="form-control" ng-model="selectedTeam" ng-options="team.name for team in teams track by team.$id">
+						<option disabled selected value>{{ teams.$resolved ? 'Pick a team' : 'Loading...' }}</option>
+					</select>
 				</div>
+				<div class="col-sm-6">
+					(1 = strongly disagree, 7 = strongly agree)
+				</div>
+			</div>
 
-				<div class="row">
-					<div class="col-sm-12">
-						<h3><b>Trade Show/Demo</b></h3>
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">{{questionsText[0]}}</h3>
+			<div class="col-sm-12">
+				<div ng-repeat="group in questionGroups">
+					<h3><b>{{ group.header }}</b></h3>
+					<div class="panel panel-default" ng-repeat="question in group.questions">
+						<div class="panel-heading">
+							<h3 class="panel-title">{{ question.text }}</h3>
 						</div>
-							<div class="panel-body">
-						   		<fieldset>
-									<div id="q1slider" class="ratingslider"></div>
-										<div class="input-textarea">
-											<button class="btn btn-primary btn_comments(1) btn_cmt" ng-click="showComment(1)">{{toggleText[1]}}</button>
-										</div>
-							   		<div class="input-textarea" ng-show="checkComment(1)">
-							   			<label for="q1textarea">Comments</label>
-							   			<textarea class="form-control" id="q1textarea" rows="1"></textarea>
-							   		</div>
-						   		</fieldset>
+
+						<fieldset class="panel-body">
+							<!-- Question with radio button -->
+							<div ng-if="question.type === 'radio'">
+								<input id="{{ 'radio-yes-' + $index }}" type="radio" ng-value="true" ng-model="question.value">
+								<label for="{{ 'radio-yes-' + $index }}">Yes</label>
+
+								<input id="{{ 'radio-yes-' + $index }}" type="radio" ng-value="false" ng-model="question.value">
+								<label for="{{ 'radio-no-' + $index }}">No</label>
 							</div>
-						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">{{questionsText[1]}}</h3>
+
+							<!-- Question with range slider -->
+							<rzslider ng-if="question.type === 'range'" rz-slider-model="question.value" rz-slider-options="sliderOptions"></rzslider>
+
+							<div>
+								<button class="btn btn-primary btn_cmt" ng-click="question.showCommentBox = !question.showCommentBox">{{ question.showCommentBox ? 'Hide comments' : 'Add comments' }}</button>
 							</div>
-							<div class="panel-body">
-						   		<fieldset>
-						   			<div id="q2slider" class="ratingslider"></div>
-										<div class="input-textarea">
-											<button class="btn btn-primary btn_comments(2) btn_cmt" ng-click="showComment(2)">{{toggleText[2]}}</button>
-										</div>
-							   		<div class="input-textarea" ng-show="checkComment(2)">
-							   			<label for="q2textarea">Comments</label>
-							   			<textarea class="form-control" id="q2textarea" rows="1"></textarea>
-							   		</div>
-						   		</fieldset>
+							<div class="input-textarea" ng-show="question.showCommentBox">
+								<label for="{{ 'comment-' + $index }}">Comments</label>
+								<textarea class="form-control" id="{{ 'comment-' + $index }}" rows="3" ng-model="question.comment"></textarea>
 							</div>
-						</div>
-						<h3><b>Pitch</b></h3>
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">{{questionsText[2]}}</h3>
-						</div>
-							<div class="panel-body">
-						   		<fieldset>
-						   			<div id="q3slider" class="ratingslider"></div>
-										<div class="input-textarea">
-											<button class="btn btn-primary btn_comments(3) btn_cmt" ng-click="showComment(3)">{{toggleText[3]}}</button>
-										</div>
-							   		<div class="input-textarea" ng-show="checkComment(3)">
-							   			<label for="q3textarea">Comments</label>
-							   			<textarea class="form-control" id="q3textarea" rows="1"></textarea>
-							   		</div>
-						   		</fieldset>
-							</div>
-						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">{{questionsText[3]}}</h3>
-						</div>
-							<div class="panel-body">
-						   		<fieldset>
-						   			<div id="q4slider" class="ratingslider"></div>
-										<div class="input-textarea">
-											<button class="btn btn-primary btn_comments(4) btn_cmt" ng-click="showComment(4)">{{toggleText[4]}}</button>
-										</div>
-							   		<div class="input-textarea" ng-show="checkComment(4)">
-							   			<label for="q4textarea">Comments</label>
-							   			<textarea class="form-control" id="q4textarea" rows="1"></textarea>
-							   		</div>
-						   		</fieldset>
-							</div>
-						</div>
-						
-						
-						
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">{{questionsText[4]}}</h3>
-							</div>
-							<div class="panel-body">
-						   		<fieldset>
-						   			<label class="radio-inline">
-						   				<input name="q8radio" type="radio" value="1">
-						   				Yes
-						   			</label>
-						   			<label class="radio-inline">
-						   				<input name="q8radio" type="radio"  value="0">
-						   				No
-						   			</label>
-										<div class="input-textarea">
-											<button class="btn btn-primary btn_comments(8) btn_cmt" ng-click="showComment(8)">{{toggleText[8]}}</button>
-										</div>
-							   		<div class="input-textarea" ng-show="checkComment(8)">
-							   			<label for="q8textarea">{{questionsText[5]}}</label>
-							   			<textarea class="form-control" id="q8textarea" rows="1"></textarea>
-							   		</div>
-						   		</fieldset>
-						   	</div>
-					    </div>
+						</fieldset>
 					</div>
 				</div>
+			</div>
+		</form>
 
-				<div class="row">
-				    <div class="col-sm-11 col-xs-10">
-						<div class="panel panel-danger" id="slide-text1">
-							<div class="panel-heading">Please select a team to grade.</div>
-						</div>
-						<div class="panel panel-danger" id="slide-text2">
-							<div class="panel-heading">Ratings must be positive values and Radio Buttons must be selected.</div>
-						</div>
-				    </div>
-				    <div class="col-xs-1 col-sm-offset-0 col-xs-offset-1">
-					  	<button type="submit" id="submit-btn" class="btn btn-primary btn-submit form_submit" ng-click="onSubmit()">Submit</button>
-				    </div>
+		<div class="row col-sm-12">
+			<div class="col-sm-10 col-xs-12">
+				<div class="alert alert-{{ alertRole }}" ng-show="alertVisible">
+					{{ alertMessage }}
 				</div>
-			</form>
+			</div>
+			<div class="col-sm-2 col-xs-12">
+				<button type="submit" id="submit-btn" class="btn btn-primary btn-submit" ng-click="onSubmit()">Submit</button>
+			</div>
 		</div>
 	</div>
-</div>
 </div>

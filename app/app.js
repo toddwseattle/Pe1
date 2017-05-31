@@ -1,8 +1,8 @@
 'use strict';
 
 angular
-  .module('PitchEvaluator', ['ngRoute', 'firebase'])
-  .constant('db_url', "https://pitchevaluator.firebaseio.com")
+  .module('PitchEvaluator', ['ngRoute', 'firebase', 'rzModule'])
+  .constant('db_url', "https://nuvention-final-17.firebaseio.com/")
   .config(function($routeProvider) {
     $routeProvider
       .when('/summary', {

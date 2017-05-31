@@ -14,69 +14,60 @@
 			<table class="table">
 				<thead>
 					<tr class="row">
-						<td></td>
-						<td class="table-teamname">Team</td>
-						<td class="table-rank">Rank</td>
-						<td class="table-qval">Q1</td>
-						<td class="table-qval">Q2</td>
-						<td class="table-qval">Q3</td>
-						<td class="table-qval">Q4</td>
-						<td class="table-continue">Pivot?</td>
-						<td class="table-ovravg">Avg</td>
+						<td ng-if="isSmallScreen()"></td>
+						<td>Team</td>
+						<td>Rank</td>
+						<td ng-repeat="question in questions">{{ header(question, $index) }}</td>
+						<td>Avg</td>
 					</tr>
 				</thead>
 				<tbody id="sortable">
-					<tr class="row table_row" ng-class="teamClasses[team.rank-1]" ng-repeat="team in reviewedTeams | orderBy:'rank'">
-						<td class="drag-handle"></td>
-						<td class="table-teamname">
-							<a ng-class="teamClasses[team.rank-1]" href="" ng-click="saveTeam(team.name)">{{team.name}} ({{team.product}})</a>
+					<tr class="row table_row" ng-class="team.color" ng-repeat="team in reviewedTeams track by team.name | orderBy:'rank'" ng-init="review=team.reviews[user]">
+						<td class="drag-handle" ng-if="isSmallScreen()"></td>
+						<td>
+							<a ng-class="team.color" href="" ng-click="reviewTeam(team)">{{team.name}} ({{team.product}})</a>
 						</td>
-						<td class="table-rank">{{team.rank}}</td>
-						<td class="table-qval">{{team.q1Val}}</td>
-						<td class="table-qval">{{team.q2Val}}</td>
-						<td class="table-qval">{{team.q3Val}}</td>
-						<td class="table-qval">{{team.q4Val}}</td>
-						<td class="table-continue">{{team.cont}}</td>
-						<td class="table-ovravg">{{team.ovrAvg}}</td>
+						<td>{{ review.rank }}</td>
+						<td ng-repeat="question in questions">{{ review.ratings[question.label] | number: 2 }}</td>
+						<td>{{ review.average | number: 2 }}</td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr class="row table_row">
-						<td></td>
-						<td class="table-teamname">Class Average</td>
-						<td class="table-qval">Rank</td>
-						<td class="table-qval">{{averagesArray[1].$value}}</td>
-						<td class="table-qval">{{averagesArray[2].$value}}</td>
-						<td class="table-qval">{{averagesArray[3].$value}}</td>
-						<td class="table-qval">{{averagesArray[4].$value}}</td>
-						<td class="table-continue">{{averagesArray[8].$value}}</td>
-						<td class="table-ovravg">{{averagesArray[0].$value}}</td>
+						<td ng-if="isSmallScreen()"></td>
+						<td>Class Average</td>
+						<td>Rank</td>
+						<td ng-repeat="question in questions">{{ sessionAverages[question.label] | number: 2 }}</td>
+						<td>ovrAvg</td>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 	</div>
 
-  	<div class="row">
+	<div class="row">
 		<div class="col-md-6 col-sm-12">
 			<h3 class="judge-page-h3">Teams to be reviewed</h3>
-		    <ul class="judge-page-ul list-group">
-		        <li ng-repeat="team in notReviewedTeams" class="to_review list-group-item">
-		          	<a href="" ng-click="saveTeam(team.name)">{{team.name}}</a>
-		        </li>
-		        <li ng-hide="notReviewedTeams.length">
-		        	<h4>All teams have been reviewed!</h4>
-		        </li>
-		    </ul>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-12">
-			<h3 class="judge-page-h3">Question Legend</h3>
-			<ul>
-				<li ng-repeat="q in questionsText">Q{{$index+1}} {{q}}</li>
+			<ul class="judge-page-ul list-group">
+				<li ng-repeat="team in unReviewedTeams track by team.name" class="to_review list-group-item">
+					<a href="" ng-click="reviewTeam(team)">{{team.name}}</a>
+				</li>
+				<li ng-hide="unReviewedTeams.length">
+					<h4>All teams have been reviewed!</h4>
+				</li>
 			</ul>
 		</div>
 	</div>
 
+	<div class="row">
+		<div class="col-sm-12">
+			<h3 class="judge-page-h3">Question Legend</h3>
+			<div ng-repeat="group in questionGroups">
+				<h5>{{ group.header }}</h5>
+				<ul>
+					<li ng-repeat="question in group.questions">{{ header(question, $index) }}: {{ question.text }}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>

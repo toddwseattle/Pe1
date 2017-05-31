@@ -18,7 +18,6 @@ angular
     var tempTeam = [];
     var teamArray = [];
 
-    var ref = $rootScope.masterref;
     var sessListRef = firebase.database().ref().child("sessionList");
     //var sessListRef = new Firebase(db_url+"/sessionList");
     var temp = new $firebaseArray(sessListRef);

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="PitchEvaluator" class="no-js"> <!--<![endif]-->
+<html lang="en" ng-app="PitchEvaluator" class="no-js">
+<!--<![endif]-->
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +11,7 @@
 
   <link rel="icon" href="favicon.png" type="image/png">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.css">
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="addTeam/addTeam.css">
@@ -19,15 +22,15 @@
   <link rel="stylesheet" href="judge/judge.css">
   <link rel="stylesheet" href="team/team.css">
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-<!--  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">-->
+  <!--  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">-->
   <link rel="stylesheet" href="normalize.css">
-<!--  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">-->
+  <!--  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">-->
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
- <!-- <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">-->
+  <!-- <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-
 </head>
+
 <body ng-controller="indexCtrl">
   <div class="container-fluid">
     <div class="row" id="title_bar">
@@ -38,8 +41,8 @@
       </div>
       <div class="col-sm-6 col-xs-4">
         <ul id="userinfo-ul">
-          <li class="userli session" ng-hide = "hideUser"><img src="session_icon.png" class="session_icon"> {{session}}</li>
-          <li class="userli userName" ng-hide = "hideUser"> <img src="user_icon.png" class="user_icon">  {{user}}</li>
+          <li class="userli session" ng-hide="hideUser"><img src="session_icon.png" class="session_icon"> {{session}}</li>
+          <li class="userli userName" ng-hide="hideUser"> <img src="user_icon.png" class="user_icon"> {{user}}</li>
           <li class="userli" ng-hide="adminFlag">{{role}}</li>
           <li class="userli" ng-hide="onLogin()" ng-click="logOut()"><a class="logout" href="#">Logout</a></li>
         </ul>
@@ -47,7 +50,7 @@
 
     </div>
     <div class="row navi" ng-style="login_background" ng-hide="onLogin()">
-     <div class="col-sm-12">
+      <div class="col-sm-12">
         <div class="row">
           <div class="col-sm-10 col-sm-offset-1" ng-show="loggedin">
             <ul class="nav nav-tabs">
@@ -68,51 +71,45 @@
         </div>
       </div>
     </div>
-    </div>
+  </div>
 
 
   </div>
 
 </body>
-  <!-- In production use:
+<!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-  <script src="jquery.ui.touch-punch.min.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="jquery.ui.touch-punch.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+  crossorigin="anonymous"></script>
 <!--  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>-->
-  <script src="modernizr-2.8.3.min.js"></script>
+<script src="modernizr-2.8.3.min.js"></script>
 <!--  <script src="bower_components/angular/angular.js"></script>-->
-  <script src="angular.js"></script>
+<script src="angular.js"></script>
 <!--  <script src="bower_components/angular-route/angular-route.js"></script>-->
-  <script src="angular-route.js"></script>
-  <!-- <script src="bower_components/angular-aria/angular-aria.js"></script> -->
-  <!-- <script src="bower_components/angular-animate/angular-animate.js"></script> -->
-  <!-- <script src="bower_components/angular-material/angular-material.js"></script> -->
-  <!-- <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script> -->
-<!--  <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
-  <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>-->
-<!-- Firebase -->
+<script src="angular-route.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
-
-<!-- AngularFire -->
 <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
-  <script src="app.js"></script>
-  <script src="summary/summary.js"></script>
-  <script src="indexCtrl.js"></script>
-  <script src="review/review.js"></script>
-  <script src="judge/judge.js"></script>
-  <script src="team/team.js"></script>
-  <script src="addTeam/addTeam.js"></script>
-  <script src="services/teamService.js"></script>
-  <script src="services/userService.js"></script>
-  <script src="services/loggedinCheck.js"></script>
-  <script src="services/permissions.js"></script>
-  <script src="login/login.js"></script>
-  <script src="newSession/newSession.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.2.2/rzslider.min.js"></script>
+
+<script src="app.js"></script>
+<script src="factories/evaluation.js"></script>
+<script src="summary/summary.js"></script>
+<script src="indexCtrl.js"></script>
+<script src="review/review.js"></script>
+<script src="judge/judge.js"></script>
+<script src="team/team.js"></script>
+<script src="addTeam/addTeam.js"></script>
+<script src="services/teamService.js"></script>
+<script src="services/userService.js"></script>
+<script src="services/loggedinCheck.js"></script>
+<script src="services/permissions.js"></script>
+<script src="login/login.js"></script>
+<script src="newSession/newSession.js"></script>
+
 </html>
