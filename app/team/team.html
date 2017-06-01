@@ -29,7 +29,7 @@
 						<td><b>{{ team.name }} Averages</b></td>
 						<td>{{ team.averages['rank'] }}</td>
 						<td ng-repeat="question in questions">{{ team.averages[question.label] | rating }}</td>
-						<td>{{ team.averages['overall'] }}</td>
+						<td>{{ team.averages['overall'] | rating }}</td>	
 					</tr>
 					<tr>
 						<td>Class {{ isSmallScreen ? 'Avg' : 'Average'}}</td>
