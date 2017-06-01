@@ -15,33 +15,6 @@ angular
       $location.path('review');
     }
 
-    $scope.header = function (question, index) {
-      return question.header || 'Q' + (index + 1);
-    }
-
-    $scope.isSmallScreen = function () {
-      return matchMedia("screen and (max-width: 768px)").matches;
-    }
-
-    function rankings() {
-      var count = 0;
-      for (var i = 0; i < $scope.reviewedTeams.length; i++) {
-        if ($scope.reviewedTeams[i].color.rank != 'none') {
-          count += 1;
-        }
-      }
-      for (var i = 0; i < $scope.reviewedTeams.length; i++) {
-        if ($scope.reviewedTeams[i].color.rank == 'none') {
-          count += 1;
-          $scope.reviewedTeams[i].color.rank = count;
-        }
-      }
-      for (var team of $scope.reviewedTeams) {
-        var revRef = firebase.database().ref($rootScope.sessionRef + "/teams/" + team.teamID + "/reviews/" + team.reviewID);
-        revRef.update({ rank: team.rank });
-      }
-    }
-
     $scope.sessionAverages = $firebaseObject(firebase.database().ref($rootScope.sessionRef).child('averages'));
     $scope.reviewedTeams = [];
     $scope.unReviewedTeams = [];
@@ -58,99 +31,48 @@ angular
           $scope.unReviewedTeams.push(team);
         }
       }
-      $scope.reviewedTeams.sort(function (a, b) { return a.rank - b.rank });
+      $scope.reviewedTeams.sort(function (a, b) { return a.reviews[$rootScope.user].rank - b.reviews[$rootScope.user].rank });
     });
 
-    $scope.dragStart = function (e, ui) {
+    function dragStart(e, ui) {
+      // Create a temporary attribute on the element with old index
       ui.item.data('start', ui.item.index());
-    }// create a temporary attribute on the element with old index
-    $scope.dragEnd = function (e, ui) {
-      var start = ui.item.data('start'),
-        end = ui.item.index();//get the new and old index
+    }
 
-      if (start < end) {
-        for (var i = 0; i < start; i++) {
-          $scope.reviewedTeams[i].color = null;
-        }
-        for (var i = end + 1; i < $scope.reviewedTeams.length; i++) {
-          $scope.reviewedTeams[i].color = null;
-        }
+    function dragEnd(e, ui) {
+      // Get the new and old index
+      var start = ui.item.data('start');
+      var end = ui.item.index();
 
-        $scope.reviewedTeams[start].color.rank = end + 1;
-        for (var i = start + 1; i <= end; i++) {
-          $scope.reviewedTeams[i].color.rank -= 1;
-        }
+      // Move the item to its new index
+      $scope.reviewedTeams.splice(end, 0, $scope.reviewedTeams.splice(start, 1)[0]);
 
-        $scope.reviewedTeams[end].color = 'red';
-        for (var i = start; i < end; i++) {
-          $scope.reviewedTeams[i].color = 'green';
-        }
-      } else {
-        for (var i = 0; i < end; i++) {
-          $scope.reviewedTeams[i].color = null;
-        }
-        for (var i = start + 1; i < $scope.reviewedTeams.length; i++) {
-          $scope.reviewedTeams[i].color = null;
-        }
-        $scope.reviewedTeams[start].color.rank = end + 1;
-        for (var i = end; i < start; i++) {
-          $scope.reviewedTeams[i].color.rank += 1;
-        }
-
-        $scope.reviewedTeams[end].color = 'green';
-        for (var i = end + 1; i <= start; i++) {
-          $scope.reviewedTeams[i].color = 'red';
-        }
+      var min = Math.min(start, end);
+      var max = Math.max(start, end);
+      for (var i = min; i <= max; i++) {
+        var team = $scope.reviewedTeams[i];
+        // Update the team's rank in the review and in the model
+        team.reviews[$rootScope.user].rank = i + 1;
+        teamsRef.child(`${team.$id}/reviews/${$rootScope.user}`).update({ rank: i + 1 });
+        team.moved = true;
       }
 
-      for (var team of $scope.reviewedTeams) {
-        var revRef = firebase.database().ref($rootScope.sessionRef + "/teams/" + team.teamID + "/reviews/" + team.reviewID);
-        revRef.update({ rank: team.rank });
-
-        var team = firebase.database().ref($rootScope.sessionRef + "/teams/" + team.teamID);
-        calcAvgRank(team);
-      }
-
-      $scope.reviewedTeams.sort(function (a, b) { return a.rank - b.rank })
       $timeout(function () {
         for (var i = 0; i < $scope.reviewedTeams.length; i++) {
-          $scope.reviewedTeams[i].color = null;
+          $scope.reviewedTeams[i].moved = false;
         }
-      }, 2500);
+      }, 1000);
     }
 
     var sortableOptions = {
-      start: $scope.dragStart,
-      update: $scope.dragEnd
+      start: dragStart,
+      update: dragEnd
     };
 
     // Drag and drop only with the handle on small screens
-    if ($scope.isSmallScreen()) {
+    if ($scope.isSmallScreen) {
       sortableOptions.handle = '.drag-handle';
     }
 
     $('#sortable').sortable(sortableOptions);
-
-    var calcAvgRank = function (team) {
-      var rank;
-      var ranksum = 0;
-
-      var reviewArray = $firebaseArray(team.child("reviews"));
-
-      reviewArray.$loaded().then(function () {
-        console.log(reviewArray);
-        for (var i = 0; i < reviewArray.length; i++) {
-          ranksum += parseFloat(reviewArray[i].rank);
-        }
-
-        console.log(ranksum);
-
-        rank = ranksum / reviewArray.length;
-        rank = rank.toFixed(2);
-
-        team.update({
-          rank: rank
-        })
-      });
-    }
   });

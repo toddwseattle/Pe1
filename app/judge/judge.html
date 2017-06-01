@@ -5,40 +5,40 @@
 		</div>
 		<div class="col-sm-9">
 			<img src="judge/Cursor-Move-512.png" id="drag-reminder-img">
-			<h4 id="drag-reminder"><strong>Drag and drop to stack rank the teams!</strong></h4>
+			<h4 id="drag-reminder">Drag and drop to stack rank the teams!</h4>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-sm-12 table-responsive">
 			<table class="table">
 				<thead>
-					<tr class="row">
-						<td ng-if="isSmallScreen()"></td>
+					<tr>
+						<td ng-if="isSmallScreen"></td>
 						<td>Team</td>
 						<td>Rank</td>
-						<td ng-repeat="question in questions">{{ header(question, $index) }}</td>
+						<td ng-repeat="question in questions">{{ question | header:$index }}</td>
 						<td>Avg</td>
 					</tr>
 				</thead>
 				<tbody id="sortable">
-					<tr class="row table_row" ng-class="team.color" ng-repeat="team in reviewedTeams track by team.name | orderBy:'rank'" ng-init="review=team.reviews[user]">
-						<td class="drag-handle" ng-if="isSmallScreen()"></td>
+					<tr class="sortable-row {{ team.moved ? 'success' : '' }}" ng-repeat="team in reviewedTeams">
+						<td class="drag-handle" ng-if="isSmallScreen"></td>
 						<td>
-							<a ng-class="team.color" href="" ng-click="reviewTeam(team)">{{team.name}} ({{team.product}})</a>
+							<a href="" ng-click="reviewTeam(team)">{{team.name}} ({{team.product}})</a>
 						</td>
-						<td>{{ review.rank }}</td>
-						<td ng-repeat="question in questions">{{ review.ratings[question.label] | number: 2 }}</td>
-						<td>{{ review.average | number: 2 }}</td>
+						<td>{{ team.reviews[user].rank }}</td>
+						<td ng-repeat="question in questions">{{ team.reviews[user].ratings[question.label] | rating }}</td>
+						<td>{{ team.reviews[user].average | rating }}</td>
 					</tr>
 				</tbody>
 				<tfoot>
-					<tr class="row table_row">
-						<td ng-if="isSmallScreen()"></td>
-						<td>Class Average</td>
+					<tr>
+						<td ng-if="isSmallScreen"></td>
+						<td>Class {{ isSmallScreen ? 'Avg' : 'Average'}}</td>
 						<td>Rank</td>
-						<td ng-repeat="question in questions">{{ sessionAverages[question.label] | number: 2 }}</td>
-						<td>ovrAvg</td>
+						<td ng-repeat="question in questions">{{ sessionAverages[question.label] | rating }}</td>
+						<td>{{ sessionAverages['overall'] | rating }}</td>
 					</tr>
 				</tfoot>
 			</table>
@@ -62,12 +62,9 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<h3 class="judge-page-h3">Question Legend</h3>
-			<div ng-repeat="group in questionGroups">
-				<h5>{{ group.header }}</h5>
-				<ul>
-					<li ng-repeat="question in group.questions">{{ header(question, $index) }}: {{ question.text }}</li>
-				</ul>
-			</div>
+			<ul>
+				<li ng-repeat="question in questions">{{ question | header:$index }}: {{ question.text }}</li>
+			</ul>
 		</div>
 	</div>
 </div>

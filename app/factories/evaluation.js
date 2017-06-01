@@ -1,16 +1,16 @@
 angular.module('PitchEvaluator').factory('Evaluation', function($rootScope) {
     class Evaluation {
-        constructor(user, teamName, questionGroups) {
+        constructor(user, questionGroups) {
             this.user = user;
-            this.teamName = teamName;
             this.ratings = {};
             this.comments = {};
             this.average = 0;
-            var count = 0;
 
+            var count = 0;
             $rootScope.forEachQuestion(questionGroups, (question) => {
                 // Skip questions that don't have a value
-                if (!question.value) return;
+                // False is a valid radio question value
+                if (!question.value && question.value !== false) return;
                 this.ratings[question.label] = question.value;
                 if (question.type === 'range') {
                     this.average += question.value;

@@ -8,6 +8,8 @@ angular
 		$rootScope.session = null;
 		$rootScope.role = null;
 		$rootScope.sessionRef = null;
+		$rootScope.isSmallScreen = matchMedia("screen and (max-width: 768px)").matches;
+
 		$scope.login_background = null;
 		$scope.hideUser = true;
 
@@ -104,7 +106,7 @@ angular
 			}, {
 				text: 'Should the team continue after class',
 				label: 'continue',
-				heading: 'Continue?',
+				header: 'Continue?',
 				type: 'radio'
 			}]
 		}];
@@ -165,7 +167,6 @@ angular
 			$location.path('login');
 		}
 
-
 		$rootScope.$on('$locationChangeSuccess', function (event) {
 			// console.log($location.path());
 			if ($location.path() === "/login") {
@@ -181,7 +182,6 @@ angular
 				$scope.hideUser = false;
 			}
 		})
-
 
 		$scope.isActive = function (route) {
 			return route === $location.path();
@@ -205,5 +205,4 @@ angular
 				}
 			}
 		);
-
 	});
