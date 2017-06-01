@@ -13,7 +13,7 @@ angular
 		$scope.login_background = null;
 		$scope.hideUser = true;
 
-		// /* Testing as Admin
+		/* Testing as Admin
 		$rootScope.user = 'Admin';
 		$rootScope.role = 'Admin';
 		$rootScope.session = "Spring Final Pitches and Demos";
@@ -49,7 +49,7 @@ angular
 			storageBucket: "nuvention-final-17.appspot.com",
 			messagingSenderId: "197433838846"
 		});
-		
+
 		$rootScope.questionGroups = [{
 			header: 'Trade Show/Demo',
 			questions: [{
