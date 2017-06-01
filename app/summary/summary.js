@@ -25,10 +25,10 @@ angular
 		$scope.teams.$loaded(function () {
 			$scope.teams.sort(function (a, b) {
 				if (a.averages === undefined || a.averages['rank'] === undefined) {
-					return -1;
+					return 1;
 				}
 				if (b.averages === undefined || b.averages['rank'] === undefined) {
-					return 1;
+					return -1;
 				}
 				return a.averages['rank'] - b.averages['rank'];
 			});
