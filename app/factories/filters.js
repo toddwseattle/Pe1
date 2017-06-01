@@ -1,5 +1,5 @@
-angular.module('PitchEvaluator').filter('rating', function () {
-    return function (value) {
+angular.module('PitchEvaluator').filter('rating', () => {
+    return value => {
         if (value === undefined) return;
         if (typeof value === 'boolean') {
             return value ? 'Y' : 'N';
@@ -7,8 +7,12 @@ angular.module('PitchEvaluator').filter('rating', function () {
             return value.toFixed(2);
         }
     }
-}).filter('header', function () {
-    return function (question, index) {
+}).filter('header', () => {
+    return (question, index) => {
         return question.header || 'Q' + (index + 1);
+    }
+}).filter('hasComments', () => {
+    return (reviews, label) => {
+        return reviews.filter(review => review.comments[label]);
     }
 });

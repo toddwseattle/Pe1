@@ -22,24 +22,24 @@ angular
 		// userService.set('Admin');
 		// // END
 
-		// // TESTING PURPOSES..........
+		/* Testing as Judge
 		$rootScope.user = 'test';
 		$rootScope.role = 'Judge';
 		$rootScope.session = "Spring Final Pitches and Demos";
 		$rootScope.sessionRef = "sessions/-KlQOGH5SBAFnMi5pvJi";
 		$rootScope.loggedin = true;
 		userService.set('Me');
-		// // END
+		//*/
 
-		// // TESTING PURPOSES..........
-		// $rootScope.user = 'New Team';
-		// $rootScope.role = 'Team';
-		// $rootScope.session = "Test Session";
-		// $rootScope.sessionRef = "https://pitchevaluator.firebaseio.com/sessions/-KIzGu8j1-UDUYTj795B";
-		// $rootScope.loggedin = true;
-		// $rootScope.teamID = "-KIzGxTmvXpcgrwOl3Q_";
-		// userService.set('New Team');
-		// // END
+		// /* Testing as Team
+		$rootScope.user = 'A';
+		$rootScope.role = 'Team';
+		$rootScope.session = "Spring Final Pitches and Demos";
+		$rootScope.sessionRef = "sessions/-KlQOGH5SBAFnMi5pvJi";
+		$rootScope.loggedin = true;
+		$rootScope.teamID = "-KlQRqeG2Lzr4lkHHqH0";
+		userService.set('A');
+		//*/
 
 		firebase.initializeApp({
 			apiKey: "AIzaSyCTFYgrrMO6_3uaYY-4HCmAnQaVglarjM0",

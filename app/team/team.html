@@ -1,100 +1,60 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-10">
-			<h2>Judge Reviews for {{teamName}}</h2>
+			<h2>Judge Reviews for {{ team.name }}</h2>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-sm-12 table-reponsive">
 			<table class="table">
 				<thead>
-					<tr class="row table_head">
-            			<th class="table-teamname metric">Judge</th>
-						<th class="table-qval metric">Rank</th>
-						<th class="table-qval metric">Q1</th>
-						<th class="table-qval metric">Q2</th>
-						<th class="table-qval metric">Q3</th>
-						<th class="table-qval metric">Q4</th>
-						<th class="table-qval metric">Pivot?</th>
-						<th class="table-qval metric">Overall</th>						
+					<tr>
+						<th>Judge</th>
+						<td>Rank</td>
+						<td ng-repeat="question in questions">{{ question | header:$index }}</td>
+						<td>Avg</td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="row table_row" ng-repeat="review in reviews">
-            			<td class="table-teamname">{{review.user}}</td>
-						<td class="table-qval value">{{review.rank}}</td>
-						<td class="table-qval value">{{review.q1}}</td>
-						<td class="table-qval value">{{review.q2}}</td>
-						<td class="table-qval value">{{review.q3}}</td>
-						<td class="table-qval value">{{review.q4}}</td>
-						<td class="table-qval value">{{review.cont}}</td>
-						<td class="table-qval value">{{review.ovr}}</td>
+					<tr ng-repeat="review in reviews">
+						<td>{{ review.$id }}</td>
+						<td>{{ review.rank }}</td>
+						<td ng-repeat="question in questions">{{ review.ratings[question.label] | rating }}</td>
+						<td>{{ review.average | rating }}</td>
 					</tr>
 				</tbody>
-				<tbody>
-					<tr class="row table_row">
-            			<td class="table-teamname"><b>{{teamName}} Average</b></td>
-						<td class="table-qval value">{{teamAvg.rank}}</td>
-						<td class="table-qval value">{{teamAvg.q1}}</td>
-						<td class="table-qval value">{{teamAvg.q2}}</td>
-						<td class="table-qval value">{{teamAvg.q3}}</td>
-						<td class="table-qval value">{{teamAvg.q4}}</td>
-						<td class="table-qval value">{{teamAvg.q8}}</td>
-						<td class="table-qval value">{{teamAvg.ovrAvg}}</td>
+				<tfoot>
+					<tr>
+						<td><b>{{ team.name }} Averages</b></td>
+						<td>{{ team.averages['rank'] }}</td>
+						<td ng-repeat="question in questions">{{ team.averages[question.label] | rating }}</td>
+						<td>{{ team.averages['overall'] }}</td>
 					</tr>
-					<tr class="row table_row">
-						<td class="table-teamname"><b>Class Average</b></td>
-						<td class="table-qval value">Rank</td>
-						<td class="table-qval value">{{avg[1].$value}}</td>
-						<td class="table-qval value">{{avg[2].$value}}</td>
-						<td class="table-qval value">{{avg[3].$value}}</td>
-						<td class="table-qval value">{{avg[4].$value}}</td>
-						<td class="table-qval value">{{avg[8].$value}}</td>
-						<td class="table-qval value">{{avg[0].$value}}</td>
+					<tr>
+						<td>Class {{ isSmallScreen ? 'Avg' : 'Average'}}</td>
+						<td>Rank</td>
+						<td ng-repeat="question in questions">{{ sessionAverages[question.label] | rating }}</td>
+						<td>{{ sessionAverages['overall'] | rating }}</td>
 					</tr>
-				</tbody>
+				</tfoot>
 			</table>
 		</div>
 	</div>
 
 	<div class="row">
-    	<div class="col-sm-12">
+		<div class="col-sm-12">
 			<h2>Comments</h2>
 			<ul>
-				<li>
-					<h4 class="question-text">Q1: {{questionsText[0]}}</h5>
+				<li ng-repeat="question in questions">
+					<h4 class="question-text">{{ question | header:$index }}: {{ question.text }}</h4>
 					<ul>
-						<li class="comment-text" ng-repeat="cmt in cmts1"><b>{{cmt.user}}</b>: {{cmt.comment}} </li>
+						<li class="comment-text" ng-repeat="review in reviews | hasComments:question.label">
+							<b>{{ review.$id }}</b>: {{ review.comments[question.label] }}
+						</li>
 					</ul>
 				</li>
-				<li>
-					<h4 class="question-text">Q2:{{questionsText[1]}}</h5>
-					<ul>
-						<li class="comment-text" ng-repeat="cmt in cmts2"><b>{{cmt.user}}</b>: {{cmt.comment}} </li>
-					</ul>
-				</li>
-				<li>
-				<h4 class="question-text">Q3: {{questionsText[2]}}</h5>
-					<ul>
-						<li class="comment-text" ng-repeat="cmt in cmts3"><b>{{cmt.user}}</b>: {{cmt.comment}} </li>
-					</ul>
-				</li>
-				<li>
-					<h4 class="question-text">Q4: {{questionsText[3]}}</h5>
-					<ul>
-						<li class="comment-text" ng-repeat="cmt in cmts4"><b>{{cmt.user}}</b>: {{cmt.comment}} </li>
-					</ul>
-				</li>
-				
-				
-				<li>
-					<h4 class="question-text">Q8: {{questionsText[4]}}</h5>
-					<ul>
-						<li class="comment-text" ng-repeat="cmt in cmts8"><b>{{cmt.user}}</b>: {{cmt.comment}} </li>
-					</ul>
-				</li>			
-			</ul>    		
+			</ul>
 		</div>
- 	</div>
+	</div>
 </div>
