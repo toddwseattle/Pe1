@@ -13,6 +13,6 @@ angular.module('PitchEvaluator').filter('rating', () => {
     }
 }).filter('hasComments', () => {
     return (reviews, label) => {
-        return reviews.filter(review => review.comments[label]);
+        return reviews.filter(review => review.comments && review.comments[label]);
     }
 });
