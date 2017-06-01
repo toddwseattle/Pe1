@@ -13,14 +13,14 @@ angular
 		$scope.login_background = null;
 		$scope.hideUser = true;
 
-		// // TESTING PURPOSES..........
-		// $rootScope.user = 'Admin';
-		// $rootScope.role = 'Admin';
-		// $rootScope.session = "Test Session";
-		// $rootScope.sessionRef = "https://pitchevaluator.firebaseio.com/sessions/-KIdcRUghsu2TwybVf5L";
-		// $rootScope.loggedin = true;
-		// userService.set('Admin');
-		// // END
+		// /* Testing as Admin
+		$rootScope.user = 'Admin';
+		$rootScope.role = 'Admin';
+		$rootScope.session = "Spring Final Pitches and Demos";
+		$rootScope.sessionRef = "sessions/-KlQOGH5SBAFnMi5pvJi";
+		$rootScope.loggedin = true;
+		userService.set('Admin');
+		//*/
 
 		/* Testing as Judge
 		$rootScope.user = 'test';
@@ -31,7 +31,7 @@ angular
 		userService.set('Me');
 		//*/
 
-		// /* Testing as Team
+		/* Testing as Team
 		$rootScope.user = 'A';
 		$rootScope.role = 'Team';
 		$rootScope.session = "Spring Final Pitches and Demos";
@@ -49,27 +49,7 @@ angular
 			storageBucket: "nuvention-final-17.appspot.com",
 			messagingSenderId: "197433838846"
 		});
-		// bug bug merge questionstext and questionslabel into single structure
-		$rootScope.questionsText = [
-			"Concise (less than 3 minutes) and informative interactive demo provided that linked value proposition to targeted customer",
-			'Questions answered concisely and accurately and feedback listened to',
-			'Team has Product Market Fit',
-			'The team has a good understanding of their target users and customers who would buy/use their solution',
-			'Solid customer acquisition and market traction results',
-			'Financial model and pricing are viable',
-			'The overall pitch was compelling and left you wanting to learn more',
-			'Should the continue after class'
-		];
-		$rootScope.questionLabel = [
-			'concise demo',
-			'concise answers',
-			'product-market fit',
-			'understands target users',
-			'traction',
-			'pricing',
-			'compelling',
-			'continue'
-		];
+		
 		$rootScope.questionGroups = [{
 			header: 'Trade Show/Demo',
 			questions: [{
