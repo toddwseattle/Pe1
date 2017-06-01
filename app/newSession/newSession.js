@@ -24,10 +24,9 @@ angular
 					name: $scope.name,
 					ref: "sessions/" + ref.key
 				});
+				$rootScope.session = $scope.name;
+				$rootScope.sessionRef = "sessions/" + ref.key;
+				$location.path('summary');
 			});
-
-			$rootScope.session = $scope.name;
-			$rootScope.sessionRef = refNew.toString();
-			$location.path('summary');
 		}
 	});
