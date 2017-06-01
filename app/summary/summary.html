@@ -2,54 +2,43 @@
 	<div class="row">
 		<div class="col-sm-10">
 			<h2>Team Data</h2>
-
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-sm-12 table-responsive">
 			<table class="table">
 				<thead>
-					<tr class="row">
-						<td class="table-teamname">Team</td>		
-						<td class="table-rank">Rank</td>
-						<td class="table-qval">Q1</td>
-						<td class="table-qval">Q2</td>
-						<td class="table-qval">Q3</td>
-						<td class="table-qval">Q4</td>
-						<td class="table-continue">Pivot?</td>
-						<td class="table-ovravg">Avg</td>
+					<tr>
+						<td>Team</td>
+						<td>Rank</td>
+						<td ng-repeat="question in questions">{{ question | header:$index }}</td>
+						<td>Avg</td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="row table_row" ng-repeat="team in teamList">
-						<td class="table-teamname">
-							<a href="#" ng-click="saveTeam(team.$id)">{{team.name}} ({{team.product}})</a>
+					<tr ng-repeat="team in teams">
+						<td>
+							<a ng-if="role === 'Judge'" href="#" ng-click="review(team)">{{team.name}} ({{team.product}})</a>
+							<span ng-if="role !== 'Judge'">{{team.name}} ({{team.product}})</span>
 						</td>
-						<td class="table-rank">{{team.rank}}</td>
-						<td class="table-qval">{{team.q1Val}}</td>
-						<td class="table-qval">{{team.q2Val}}</td>
-						<td class="table-qval">{{team.q3Val}}</td>
-						<td class="table-qval">{{team.q4Val}}</td>
-						<td class="table-continue">{{team.q8Val}}</td>				
-						<td class="table-ovravg">{{team.ovrAvg}}</td>
+						<td>{{ team.averages['rank'] }}</td>
+						<td ng-repeat="question in questions">{{ team.averages[question.label] | rating }}</td>
+						<td>{{ team.averages['overall'] | rating }}</td>
 					</tr>
 				</tbody>
-				<tbody>
-					<tr class="row table_row">
-						<td class="col-xs-2 name">Class Average</td>
-						<td class="table-qval">Rank</td>
-						<td class="table-qval">{{averagesArray[1].$value}}</td>
-						<td class="table-qval">{{averagesArray[2].$value}}</td>
-						<td class="table-qval">{{averagesArray[3].$value}}</td>
-						<td class="table-qval">{{averagesArray[4].$value}}</td>
-						<td class="table-continue">{{averagesArray[8].$value}}</td>
-						<td class="table-ovravg">{{averagesArray[0].$value}}</td>
+				<tfoot>
+					<tr>
+						<td>Class {{ isSmallScreen ? 'Avg' : 'Average'}}</td>
+						<td>Rank</td>
+						<td ng-repeat="question in questions">{{ sessionAverages[question.label] | rating }}</td>
+						<td>{{ sessionAverages['overall'] | rating }}</td>
 					</tr>
-				</tbody>
+				</tfoot>
 			</table>
 		</div>
 	</div>
+
 	<div class="row">
 		<div class="col-sm-6">
 			<table class="table">
@@ -60,30 +49,30 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="team in teamArray">
-						
-						<td>{{team.name}}</td>
+					<tr ng-repeat="team in teams">
+						<td>{{ team.name }}</td>
 						<td>
-							<a href="#" ng-click='downloadTeamCSV({ filename: "team-data.csv", index: $index })'> 
-								<p>Download {{team.name}} data</p>
+							<a href="#" ng-click='downloadReviews(team.name)'>
+								<p>Download {{ team.name }} data</p>
 							</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-		</div>	
-		<div class="col-sm-3">
-			<button type="button" class="btn btn-primary btn-download" ng-click='downloadCSV({ filename: "summary-data.csv" })'>
-				<span id="download_text">Download</span>
-				<p id="download_option">Summary without Comments</p>
-			</button>
 		</div>
+
 		<div class="col-sm-3">
-			<button type="button" class="btn btn-primary btn-download" ng-click='downloadFullCSV({ filename: "summary-data-with-comments.csv" })'>
-				<span id="download_text">Download</span>
-				<p id="download_option">Summary with Comments</p>
+			<button type="button" class="btn btn-primary btn-download" ng-click='downloadSummary()'>
+				<span id="download_text">Download summary</span>
+				<p id="download_option">No comments</p>
 			</button>
 		</div>
 
+		<div class="col-sm-3">
+			<button type="button" class="btn btn-primary btn-download" ng-click='downloadReviews()'>
+				<span id="download_text">Download all reviews</span>
+				<p id="download_option">Includes comments</p>
+			</button>
+		</div>
 	</div>
 </div>

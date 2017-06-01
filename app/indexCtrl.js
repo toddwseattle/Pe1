@@ -89,7 +89,7 @@ angular
 				type: 'range'
 			}, {
 				text: 'The team has a good understanding of their target users and customers who would buy/use their solution',
-				label: 'understands target users',
+				label: 'understands users',
 				type: 'range'
 			}, {
 				text: 'Solid customer acquisition and market traction results',

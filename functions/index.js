@@ -7,6 +7,7 @@ var questions = require('./questions').questions;
 // Calculate team and session averages whenever a review is written or updated
 exports.calculateAverages = functions.database.ref('/sessions/{sessionId}/teams/{teamId}/reviews/{reviewerName}')
     .onWrite(event => {
+        if (!event.data.changed()) return;
         var teamRef = event.data.ref.parent.parent;
         var sessionRef = admin.database().ref('/sessions/' + event.params.sessionId);
         return updateTeamAvgs(teamRef).then(() => updateSessionAvgs(sessionRef));
@@ -60,6 +61,7 @@ function updateTeamAvgs(teamRef) {
         if (!team) return false;
 
         var reviews = team.reviews;
+        Object.assign(team, calculateQuestionAvgs(reviews, 'ratings'));
 
         // Sum up and count rankings
         var rankCount = 0;
@@ -74,10 +76,8 @@ function updateTeamAvgs(teamRef) {
 
         // Calculate rank average
         if (rankCount) {
-            team.averageRank = rankSum / rankCount;
+            team.averages['rank'] = rankSum / rankCount;
         }
-
-        Object.assign(team, calculateQuestionAvgs(reviews, 'ratings'));
         return team;
     });
 }
