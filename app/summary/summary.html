@@ -19,7 +19,7 @@
 				<tbody>
 					<tr ng-repeat="team in teams">
 						<td>
-							<a ng-if="role === 'Judge'" href="#" ng-click="review(team)">{{team.name}} ({{team.product}})</a>
+							<a ng-if="role === 'Judge'" href="" ng-click="reviewTeam(team)">{{team.name}} ({{team.product}})</a>
 							<span ng-if="role !== 'Judge'">{{team.name}} ({{team.product}})</span>
 						</td>
 						<td>{{ team.averages['rank'] }}</td>
@@ -63,15 +63,15 @@
 
 		<div class="col-sm-3">
 			<button type="button" class="btn btn-primary btn-download" ng-click='downloadSummary()'>
-				<span id="download_text">Download summary</span>
-				<p id="download_option">No comments</p>
+				<span class="download_text">Download summary</span>
+				<p class="download_option">No comments</p>
 			</button>
 		</div>
 
 		<div class="col-sm-3">
 			<button type="button" class="btn btn-primary btn-download" ng-click='downloadReviews()'>
-				<span id="download_text">Download all reviews</span>
-				<p id="download_option">Includes comments</p>
+				<span class="download_text">Download all reviews</span>
+				<p class="download_option">Includes comments</p>
 			</button>
 		</div>
 	</div>

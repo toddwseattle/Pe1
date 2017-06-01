@@ -2,8 +2,8 @@
 angular
   .module('PitchEvaluator')
   .controller('SummaryCtrl', function ($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, loggedinCheck, teamService) {
-
     loggedinCheck.check();
+
     if (!permissionsService.isPermitted('Overview')) {
       if ($rootScope.role == 'Team') {
         $location.path('team');
