@@ -107,7 +107,7 @@ angular
 				if (review.rank === undefined) {
 					var reviewedCount = 0;
 					for (var i = 0; i < $scope.teams.length; i++) {
-						if ($scope.teams[i].reviews[$rootScope.user]) {
+						if ($scope.teams[i].reviews && $scope.teams[i].reviews[$rootScope.user]) {
 							reviewedCount++;
 						}
 					}
