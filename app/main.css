@@ -13,6 +13,10 @@ hr {
     border-color: #401f68 !important;
 }
 
+li {
+    list-style-type: none;
+}
+
 
 /*! HTML5 Boilerplate v5.2.0 | MIT License | https://html5boilerplate.com/ */
 
