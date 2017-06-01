@@ -1,7 +1,7 @@
 'use strict';
 angular
   .module('PitchEvaluator')
-  .controller('loginCtrl', function($location, $rootScope, $scope, $firebaseObject, $firebaseArray, userService, db_url) {
+  .controller('loginCtrl', function($location, $rootScope, $scope, $firebaseObject, $firebaseArray, userService) {
     $scope.loading = false;
     $scope.roles = ['Admin', 'Judge', 'Team'];
     $scope.adminFlag = false;
@@ -14,7 +14,6 @@ angular
     if ($rootScope.loggedin) {
       $location.path('summary');
     }
-//    var sessRef = new Firebase(db_url + "/sessionList");
 firebase.auth().signInAnonymously().catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
@@ -81,7 +80,6 @@ firebase.auth().signInAnonymously().catch(function(error) {
       $scope.loading = true;
       if ($scope.role=='Admin') {
         var passRef = firebase.database().ref().child("adminpassword");
-        //var passRef = new Firebase(db_url+"/adminpassword");
         var password = new $firebaseObject(passRef);
         password.$loaded(function(data) {
           checkPassword(data.$value);
@@ -89,7 +87,6 @@ firebase.auth().signInAnonymously().catch(function(error) {
       }
       else if ($scope.role=='Judge') {
         var sessListRef = firebase.database().ref().child("sessionList");
-//        var sessListRef = new Firebase(db_url+"/sessionList");
         var temp = new $firebaseArray(sessListRef);
         temp.$loaded(function() {
           temp.forEach(function(session) {
@@ -106,7 +103,6 @@ firebase.auth().signInAnonymously().catch(function(error) {
       }
       else if ($scope.role=='Team') {
               var sessListRef = firebase.database().ref().child("sessionList");
-//        var sessListRef = new Firebase(db_url+"/sessionList");
         var temp = new $firebaseArray(sessListRef);
         temp.$loaded(function() {
           temp.forEach(function(session) {
@@ -160,7 +156,6 @@ firebase.auth().signInAnonymously().catch(function(error) {
           $rootScope.loggedin = true;
           $rootScope.session = $scope.session;
           $rootScope.role = $scope.role;
-//          var sessListRef = new Firebase(db_url+"/sessionList");
           var sessListRef = firebase.database().ref().child("sessionList");
 
           var temp = new $firebaseArray(sessListRef);

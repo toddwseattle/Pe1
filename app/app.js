@@ -2,7 +2,6 @@
 
 angular
   .module('PitchEvaluator', ['ngRoute', 'firebase', 'rzModule'])
-  .constant('db_url', "https://nuvention-final-17.firebaseio.com/")
   .config(function($routeProvider) {
     $routeProvider
       .when('/summary', {

@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('PitchEvaluator')
-	.controller('addTeamCtrl', function ($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, db_url, loggedinCheck) {
+	.controller('addTeamCtrl', function ($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, loggedinCheck) {
 		loggedinCheck.check();
 
 		if (!permissionsService.isPermitted('addTeam')) {
