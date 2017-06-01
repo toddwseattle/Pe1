@@ -13,15 +13,18 @@ angular
 		$scope.judgePass = "";
 
 		$scope.createSession = function () {
-			var refSessions = firebase.database().ref('sessions');
-			var refNew = refSessions.push({
+			var refSessions = $firebaseArray(firebase.database().ref('sessions'));
+			var refNew = refSessions.$add({
 				name: $scope.name,
 				desc: $scope.desc,
 				judgePass: $scope.judgePass
+			}).then(function (ref) {
+				var sessionList = $firebaseArray(firebase.database().ref('sessionList'));
+				sessionList.$add({
+					name: $scope.name,
+					ref: "sessions/" + ref.key
+				});
 			});
-			console.log(refNew.toString());
-			var refSessionList = firebase.database().ref('sessionList');
-			if (refNew.path.o.length == 2) refSessionList.push({ name: $scope.name, ref: refNew.path.o[0] + "/" + refNew.path.o[1] });
 
 			$rootScope.session = $scope.name;
 			$rootScope.sessionRef = refNew.toString();
