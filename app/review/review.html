@@ -2,14 +2,14 @@
 	<div class="row">
 		<form>
 			<div id="teams-list" class="row col-xs-12">
-				<div class="col-xs-6">
+				<div class="col-xs-12 col-sm-6">
 					<h4>Currently grading:</h4>
 
 					<select id="team-select" class="form-control" ng-model="selectedTeam" ng-options="team.name for team in teams track by team.$id">
 						<option disabled selected value>{{ teams.$resolved ? 'Pick a team' : 'Loading...' }}</option>
 					</select>
 				</div>
-				<div class="col-xs-6">
+				<div class="col-xs-12 col-sm-6">
 					(1 = strongly disagree, 7 = strongly agree)
 				</div>
 			</div>
