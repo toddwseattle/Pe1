@@ -9,7 +9,7 @@
 		</div>
 	</div>
 
-	<div class="row">	
+	<div class="row">
 		<div class="col-sm-12 table-responsive">
 			<table class="table">
 				<thead>
@@ -17,8 +17,8 @@
 						<td ng-if="isSmallScreen"></td>
 						<td>Team</td>
 						<td>Rank</td>
-						<td ng-repeat="question in questions">{{ question | header:$index }}</td>
 						<td>Avg</td>
+						<td ng-repeat="question in questions">{{ question | header:$index }}</td>
 					</tr>
 				</thead>
 				<tbody id="sortable">
@@ -28,8 +28,8 @@
 							<a href="" ng-click="reviewTeam(team)">{{team.name}} ({{team.product}})</a>
 						</td>
 						<td>{{ team.reviews[user].rank }}</td>
-						<td ng-repeat="question in questions">{{ team.reviews[user].ratings[question.label] | rating }}</td>
 						<td>{{ team.reviews[user].average | rating }}</td>
+						<td ng-repeat="question in questions">{{ team.reviews[user].ratings[question.label] | rating }}</td>
 					</tr>
 				</tbody>
 				<tfoot>
@@ -37,8 +37,8 @@
 						<td ng-if="isSmallScreen"></td>
 						<td>Class {{ isSmallScreen ? 'Avg' : 'Average'}}</td>
 						<td>Rank</td>
-						<td ng-repeat="question in questions">{{ sessionAverages[question.label] | rating }}</td>
 						<td>{{ sessionAverages['overall'] | rating }}</td>
+						<td ng-repeat="question in questions">{{ sessionAverages[question.label] | rating }}</td>
 					</tr>
 				</tfoot>
 			</table>

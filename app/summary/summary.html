@@ -12,8 +12,8 @@
 					<tr>
 						<td>Team</td>
 						<td>Rank</td>
-						<td ng-repeat="question in questions">{{ question | header:$index }}</td>
 						<td>Avg</td>
+						<td ng-repeat="question in questions">{{ question | header:$index }}</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -23,16 +23,16 @@
 							<span ng-if="role !== 'Judge'">{{team.name}} ({{team.product}})</span>
 						</td>
 						<td>{{ team.averages['rank'] }}</td>
-						<td ng-repeat="question in questions">{{ team.averages[question.label] | rating }}</td>
 						<td>{{ team.averages['overall'] | rating }}</td>
+						<td ng-repeat="question in questions">{{ team.averages[question.label] | rating }}</td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td>Class {{ isSmallScreen ? 'Avg' : 'Average'}}</td>
 						<td>Rank</td>
-						<td ng-repeat="question in questions">{{ sessionAverages[question.label] | rating }}</td>
 						<td>{{ sessionAverages['overall'] | rating }}</td>
+						<td ng-repeat="question in questions">{{ sessionAverages[question.label] | rating }}</td>
 					</tr>
 				</tfoot>
 			</table>
