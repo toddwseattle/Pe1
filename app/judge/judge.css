@@ -17,7 +17,7 @@
 .drag-handle {
 	cursor: move;
 	background: none;
-	padding: 0px 18px;
+	padding: 0px 18px !important;
 }
 
 #drag-reminder-img {
