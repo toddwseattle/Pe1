@@ -104,6 +104,8 @@ angular
 					var confirmEmptyAnswers = confirm("Not every question is answered. Are you sure you want to submit the form?");
 					if (!confirmEmptyAnswers) {
 						return;
+					} else {
+						break;
 					}
 				}
 			}
