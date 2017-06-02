@@ -93,9 +93,18 @@ angular
 			var evaluation = new Evaluation(user, $scope.questionGroups);
 			if (!evaluation.hasComments()) {
 				// No comments entered
-				var confirmNoComments = confirm("You didn't type in any comments/ Are you sure you want to submit the form?");
-				if (!confirmNoComments) {
+				var confirmEmptyAnswers = confirm("No comments provided. Are you sure you want to submit the form?");
+				if (!confirmEmptyAnswers) {
 					return;
+				}
+			}
+			for (var i = 0; i < $rootScope.questions.length; i++) {
+				var question = $rootScope.questions[i];
+				if (evaluation.ratings[question.label] === undefined) {
+					var confirmEmptyAnswers = confirm("Not every question is answered. Are you sure you want to submit the form?");
+					if (!confirmEmptyAnswers) {
+						return;
+					}
 				}
 			}
 
