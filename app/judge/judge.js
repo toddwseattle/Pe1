@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('PitchEvaluator')
-	.controller('JudgeCtrl', function ($timeout, $rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, loggedinCheck, teamService) {
+	.controller('JudgeCtrl', function ($timeout, $rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, loggedinCheck, teamService, statsService) {
 		loggedinCheck.check();
 
 		if (!permissionsService.isPermitted('JudgeView')) {
@@ -52,10 +52,14 @@ angular
 			for (var i = min; i <= max; i++) {
 				var team = $scope.reviewedTeams[i];
 				// Update the team's rank in the review and in the model
+				var teamRef = teamsRef.child(team.$id);
 				team.reviews[$rootScope.user].rank = i + 1;
-				teamsRef.child(`${team.$id}/reviews/${$rootScope.user}`).update({ rank: i + 1 });
+				teamRef.child(`/reviews/${$rootScope.user}`).update({ rank: i + 1 });
+				statsService.updateTeamAvgs(teamRef);
 				team.moved = true;
 			}
+
+			statsService.updateSessionAvgs();
 
 			$timeout(function () {
 				for (var i = 0; i < $scope.reviewedTeams.length; i++) {

@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('PitchEvaluator')
-	.controller('ReviewCtrl', function ($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, teamService, loggedinCheck, Evaluation) {
+	.controller('ReviewCtrl', function ($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, teamService, statsService, loggedinCheck, Evaluation) {
 		loggedinCheck.check();
 
 		if (!permissionsService.isPermitted('Review')) {
@@ -36,6 +36,8 @@ angular
 		$scope.$watch(function (scope) { return $scope.selectedTeam }, loadPreviousReview);
 
 		function loadPreviousReview() {
+			// Clear any alerts when we select a new team
+			$scope.alertVisible = false;
 			if (dirty || !$scope.selectedTeam) return;
 			var reviewRef = teamsRef.child($scope.selectedTeam.$id).child('reviews').child($rootScope.user);
 			$firebaseObject(reviewRef).$loaded(function (review) {
@@ -63,7 +65,6 @@ angular
 
 			$rootScope.forEachQuestion($scope.questionGroups, function (question) {
 				var rating = review.ratings[question.label];
-				if (!rating && rating !== false) return;
 				question.value = rating;
 				if (!review.comments || !review.comments[question.label]) return;
 				question.comment = review.comments[question.label];
@@ -87,7 +88,8 @@ angular
 				$scope.alertVisible = false;
 			}
 
-			var reviewRef = teamsRef.child(`${$scope.selectedTeam.$id}/reviews/${$rootScope.user}`);
+			var teamRef = teamsRef.child($scope.selectedTeam.$id);
+			var reviewRef = teamRef.child(`/reviews/${$rootScope.user}`);
 			var review = $firebaseObject(reviewRef);
 
 			var evaluation = new Evaluation(user, $scope.questionGroups);
@@ -98,20 +100,9 @@ angular
 					return;
 				}
 			}
-			for (var i = 0; i < $rootScope.questions.length; i++) {
-				var question = $rootScope.questions[i];
-				if (evaluation.ratings[question.label] === undefined) {
-					var confirmEmptyAnswers = confirm("Not every question is answered. Are you sure you want to submit the form?");
-					if (!confirmEmptyAnswers) {
-						return;
-					} else {
-						break;
-					}
-				}
-			}
 
 			// Push the update review to Firebase
-			review.$loaded().then(function() {
+			review.$loaded().then(function () {
 				Object.assign(review, evaluation);
 
 				// If we haven't ranked them, give them a rank
@@ -125,8 +116,14 @@ angular
 					review.rank = reviewedCount + 1;
 				}
 
-				review.$save().then(function () {
-					showAlert('success', 'Evaluation saved!');
+				review.$save().then(() => {
+					statsService.updateTeamAvgs(teamRef)
+						.then(statsService.updateSessionAvgs)
+						.then(() => {
+							dirty = false;
+							showAlert('success', 'Evaluation saved!');
+							$scope.$digest();
+						});
 				});
 			});
 		}
