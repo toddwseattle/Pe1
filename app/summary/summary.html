@@ -11,7 +11,7 @@
 				<thead>
 					<tr>
 						<td>Team</td>
-						<td>Rank</td>
+						<td>Avg Rank</td>
 						<td>Avg</td>
 						<td ng-repeat="question in questions">{{ question | header:$index }}</td>
 					</tr>
@@ -22,7 +22,7 @@
 							<a ng-if="role === 'Judge'" href="" ng-click="reviewTeam(team)">{{team.name}} ({{team.product}})</a>
 							<span ng-if="role !== 'Judge'">{{team.name}} ({{team.product}})</span>
 						</td>
-						<td>{{ team.averages['rank'] }}</td>
+						<td>{{ team.averages['rank'] | rating }}</td>
 						<td>{{ team.averages['overall'] | rating }}</td>
 						<td ng-repeat="question in questions">{{ team.averages[question.label] | rating }}</td>
 					</tr>
@@ -30,7 +30,7 @@
 				<tfoot>
 					<tr>
 						<td>Class {{ isSmallScreen ? 'Avg' : 'Average'}}</td>
-						<td>Rank</td>
+						<td>Avg Rank</td>
 						<td>{{ sessionAverages['overall'] | rating }}</td>
 						<td ng-repeat="question in questions">{{ sessionAverages[question.label] | rating }}</td>
 					</tr>
