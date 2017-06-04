@@ -42,51 +42,35 @@ angular
 		//*/
 
 		firebase.initializeApp({
-			apiKey: "AIzaSyCTFYgrrMO6_3uaYY-4HCmAnQaVglarjM0",
-			authDomain: "nuvention-final-17.firebaseapp.com",
-			databaseURL: "https://nuvention-final-17.firebaseio.com",
-			projectId: "nuvention-final-17",
-			storageBucket: "nuvention-final-17.appspot.com",
-			messagingSenderId: "197433838846"
+			apiKey: "AIzaSyD9XgBYtKYFzKFChf7R8ZT6RU4k4AcoG3s",
+			authDomain: "pitchevaluator-e74d8.firebaseapp.com",
+			databaseURL: "https://pitchevaluator-e74d8.firebaseio.com",
+			storageBucket: "pitchevaluator-e74d8.appspot.com",
+			messagingSenderId: "866109741450"
 		});
 
 		$rootScope.questionGroups = [{
-			header: 'Trade Show/Demo',
-			questions: [{
-				text: 'Concise (less than 3 minutes) and informative interactive demo provided that linked value proposition to targeted customer',
-				label: 'concise demo',
-				type: 'range'
-			}, {
-				text: 'Questions answered concisely and accurately and feedback listened to',
-				label: 'concise answers',
-				type: 'range'
-			}]
-		}, {
 			header: 'Pitch',
 			questions: [{
-				text: 'Team has Product Market Fit',
-				label: 'product-market fit',
+				text: 'Problem/Need team is pursuing was clearly explained and understood',
+				label: 'problem/need',
 				type: 'range'
 			}, {
-				text: 'The team has a good understanding of their target users and customers who would buy/use their solution',
-				label: 'understands users',
+				text: 'The team has a good understanding of their target users and customers who would buy/use their solution.',
+				label: 'target customers',
 				type: 'range'
 			}, {
-				text: 'Solid customer acquisition and market traction results',
-				label: 'traction',
+				text: 'Demo addresses the problem/need adequately.',
+				label: 'demo',
 				type: 'range'
 			}, {
-				text: 'Financial model and pricing are viable',
-				label: 'pricing',
-				type: 'range'
-			}, {
-				text: 'The overall pitch was compelling and left you wanting to learn more',
+				text: 'The overall pitch was *compelling* and left you wanting to learn more.',
 				label: 'compelling',
 				type: 'range'
 			}, {
-				text: 'Should the team continue after class',
-				label: 'continue',
-				header: 'Continue?',
+				text: 'Should the team pivot?',
+				label: 'pivot',
+				header: 'Pivot?',
 				type: 'radio'
 			}]
 		}];
