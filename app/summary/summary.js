@@ -1,253 +1,153 @@
 'use strict';
 angular
-  .module('PitchEvaluator')
-  .controller('SummaryCtrl', function($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, loggedinCheck, teamService, userService, db_url) {
+	.module('PitchEvaluator')
+	.controller('SummaryCtrl', function ($rootScope, $scope, permissionsService, $firebaseObject, $firebaseArray, $location, loggedinCheck, teamService) {
+		loggedinCheck.check();
 
-    loggedinCheck.check();
-    if (!permissionsService.isPermitted('Overview')) {
-      // if ($rootScope.role == 'Judge') {
-      //   $location.path('judge');
-      // }
-      if ($rootScope.role == 'Team'){
-          $location.path('team');
-      }
-    }
+		if (!permissionsService.isPermitted('Overview')) {
+			if ($rootScope.role == 'Team') {
+				$location.path('team');
+			}
+		}
 
-    var teamsForCSV = [];
-    var fullCSV = [];
-    var tempTeam = [];
-    var teamArray = [];
+		$scope.reviewTeam = function (team) {
+			if ($rootScope.role === 'Judge') {
+				teamService.set(team);
+				$location.path('review');
+			}
+		}
 
-    var ref = $rootScope.masterref;
-    var sessListRef = firebase.database().ref().child("sessionList");
-    //var sessListRef = new Firebase(db_url+"/sessionList");
-    var temp = new $firebaseArray(sessListRef);
-    temp.$loaded(function() {
-      temp.forEach(function(session) {
-        if (session.name==$rootScope.session) {
-          var teamsRef=firebase.database().ref(session.ref).child('teams')
-//          var teamsRef = new Firebase(session.ref+"/teams");
-          var averagesRef = teamsRef.parent.child("averages");
-          $scope.averagesArray = $firebaseArray(averagesRef);
+		var sessionRef = firebase.database().ref($rootScope.sessionRef);
+		$scope.sessionAverages = $firebaseObject(sessionRef.child('averages'));
+		var teamsRef = firebase.database().ref($rootScope.sessionRef + "/teams");
+		$scope.teams = $firebaseArray(teamsRef);
 
-          $scope.teamArray = $firebaseArray(firebase.database().ref(session.ref).child("teams"));
-//          $scope.teamArray = $firebaseArray(new Firebase(session.ref+"/teams"));
-          $scope.teamList = $firebaseArray(firebase.database().ref(session.ref).child("teams"));
-      //    $scope.teamList = $firebaseArray(new Firebase(session.ref+"/teams"));
-          $scope.teamList.$loaded(function() {
-            $scope.teamList.sort(function(a,b) {return a.rank-b.rank});
+		$scope.teams.$loaded(function () {
+			$scope.teams.sort(function (a, b) {
+				if (a.averages === undefined || a.averages['rank'] === undefined) {
+					return 1;
+				}
+				if (b.averages === undefined || b.averages['rank'] === undefined) {
+					return -1;
+				}
+				return a.averages['rank'] - b.averages['rank'];
+			});
+		});
 
-            // to create the arrayOfObjects you'll print to CSV
-            for (var i = 0; i < $scope.teamList.length; i++) {
-              //to make the simple team
-              var curTeam = $scope.teamList[i];
-              var teamy = new Team(curTeam.name, curTeam.product,curTeam.rank,curTeam.q1Val,
-                curTeam.q2Val, curTeam.q3Val, curTeam.q4Val,
-                curTeam.q8Val,
-                curTeam.ovrAvg);
-              teamsForCSV.push(teamy);
-            }//end for loop
+		// Initialize CSV headers for summary and detail CSVs
+		var summaryHeader = ["name", "rank", "average"];
+		var detailHeader = ["name", "reviewer", "rank", "average"];
+		$rootScope.questions.forEach(question => {
+			var label = question.label;
+			summaryHeader.push(label);
+			detailHeader.push(label);
+			detailHeader.push(label) + ' (comments)';
+		});
 
-            //data snapshot
-            teamsRef.once("value", function(snapshot) {
-              snapshot.forEach(function(childSnapshot) {
-                var teamSnap = childSnapshot;
-                var reviewsSnap = teamSnap.child("reviews");
-                reviewsSnap.forEach(function(childSnapshot) {
-                  //save each review as an object, from which you can grab field's
-                  var rev = childSnapshot.val();
-                  var fullEval = new Eval(rev.teamName, rev.user, rev.rank, rev.q1, rev.cmt1,
-                    rev.q2, rev.cmt2, rev.q3, rev.cmt3, rev.q4, rev.cmt4,
-                    rev.q8, rev.cmt8);
-                  fullCSV.push(fullEval);
-                  tempTeam.push(fullEval);
-                }); //end review loop
-                teamArray.push(tempTeam);
-                tempTeam = [];
-              }); //end team loop
-            });
+		// Takes an array of columns and an array of data objects
+		// Outputs a CSV string with data header
+		function convertDataToCSV(columns, data) {
+			var columnDelimiter = ',';
+			var lineDelimiter = '\n';
 
-          }) //end teamList.$loaded
-        } //end if
-      }); //end temp.forEach
-    }); //end temp.$loaded
+			var result = 'data:text/csv;charset=utf-8,';
+			result += columns.join(columnDelimiter);
+			result += lineDelimiter;
 
-    //Function to store the team in the teamService
-    $scope.saveTeam = function(teamID, teamName) {
-      $rootScope.teamID = teamID;
-      $rootScope.teamName = teamName;
-      $location.path('team');
-    }
+			data.forEach(function (item) {
+				columns.forEach(function (key, i) {
+					if (i > 0) result += columnDelimiter;
+					result += item[key];
+				});
+				result += lineDelimiter;
+			});
 
-    $scope.setSelectedTab = function(tab) {
-      $location.path(tab);
-    }
+			return result;
+		}
 
-    var calcAvgRank = function(team) {
-      var rank;
-      var ranksum = 0;
+		function downloadCSV(csvData, fileName) {
+			var encoded = encodeURI(csvData);
 
-      var reviewArray = $firebaseArray(team.child("reviews"));
+			var link = document.createElement('a');
+			link.setAttribute('href', encoded);
+			link.setAttribute('download', fileName);
 
-      reviewArray.$loaded().then(function() {
-        for (var i = 0; i < teamsArray.length; i++) {
-          ranksum += parseFloat(teamsArray[i]);
-        }
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		}
 
-        rank = ranksum/reviewArray.length;
-        rank = rank.toFixed(2);
+		$scope.downloadSummary = function () {
+			Promise.all([$scope.sessionAverages.$loaded(), $scope.teams.$loaded()]).then(() => {
+				var summaryData = [];
 
-        team.update({
-          rank: rank
-        })
+				$scope.teams.forEach(team => {
+					var data = {
+						[summaryHeader[0]]: team.name,
+						[summaryHeader[1]]: team.averages['rank'],
+						[summaryHeader[2]]: team.averages['overall'],
+					}
 
-      });
+					$rootScope.questions.forEach(question => {
+						var label = question.label;
+						data[label] = team.averages[label];
+					});
 
-    }
+					summaryData.push(data);
+				});
 
-//Team Class for Summary CSV w/o comments
-  class Team {
-    constructor(name,product,rank, q1, q2, q3, q4,
-      q5, TA) {
-      this.Team_Name = name+' ('+product+')';
-      this.rank=rank;
-      this[$rootScope.questionLabel[0]] = q1;
-      this[$rootScope.questionLabel[1]] = q2;
-      this[$rootScope.questionLabel[2]] = q3;
-      this[$rootScope.questionLabel[3]] = q4;
-      this[$rootScope.questionLabel[4]] = q5;
-      this.Team_Average = TA;
+				var classData = {
+					[summaryHeader[0]]: "Class",
+					[summaryHeader[1]]: $scope.sessionAverages['rank'],
+					[summaryHeader[2]]: $scope.sessionAverages['overall'],
+				}
 
-    }
-  }
+				$rootScope.questions.forEach(question => {
+					var label = question.label;
+					classData[label] = $scope.sessionAverages[label];
+				});
 
-//Eval Class for Summary CSV w/ Comments & Individual Team CSVs
-  class Eval {
-    constructor(teamName, Reviewer, Rank,
-      q1, q1c, q2, q2c, q3, q3c, q4, q4c,
-     q8, q8c) {
-      this.Team_Name = teamName;
-      this.Reviewer = Reviewer;
-      this.Rank = Rank;
-      this[$rootScope.questionLabel[0]] = q1;
-      this[$rootScope.questionLabel[1]] = q2;
-      this[$rootScope.questionLabel[2]] = q3;
-      this[$rootScope.questionLabel[3]] = q4;
-      this[$rootScope.questionLabel[4]] = q8;
-      this[$rootScope.questionLabel[0]+"_Comments"] = q1c.replace(/\n/g,' // ');
-      this[$rootScope.questionLabel[1]+"_Comments"] = q2c.replace(/\n/g,' // ');
-      this[$rootScope.questionLabel[2]+"_Comments"] = q3c.replace(/\n/g,' // ');
-      this[$rootScope.questionLabel[3]+"_Comments"] = q4c.replace(/\n/g,' // ');
-      this[$rootScope.questionLabel[4]+"_Comments"] = q8c.replace(/\n/g,' // ');
-    }
-  }
+				summaryData.push(classData);
 
-  function convertArrayOfObjectsToCSV(args) {
-    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+				downloadCSV(convertDataToCSV(summaryHeader, summaryData),
+					"summary.csv");
+			});
+		}
 
-    data = args.data || null;
-    if (data == null || !data.length) {
-        return null;
-    }
+		$scope.downloadReviews = function (teamName) {
+			$scope.teams.$loaded(() => {
+				var allReviews = [];
 
-    columnDelimiter = args.columnDelimiter || ',';
-    lineDelimiter = args.lineDelimiter || '\n';
+				$scope.teams.forEach(team => {
+					// Only get data for a certain team if specified
+					if (teamName !== undefined && team.name !== teamName) return;
+					for (var reviewer in team.reviews) {
+						var review = team.reviews[reviewer];
+						var data = {
+							[detailHeader[0]]: team.name,
+							[detailHeader[1]]: reviewer,
+							[detailHeader[2]]: review.rank,
+							[detailHeader[3]]: review.average,
+						}
 
-    keys = Object.keys(data[0]);
+						$rootScope.questions.forEach(question => {
+							var label = question.label;
+							data[label] = review.ratings[label];
+							data[label + " (comments)"] = review.comments[label];
+						});
 
-    result = '';
-    result += keys.join(columnDelimiter);
-    result += lineDelimiter;
+						allReviews.push(data);
+					}
+				});
 
-    data.forEach(function(item) {
-        ctr = 0;
-        keys.forEach(function(key) {
-            if (ctr > 0) result += columnDelimiter;
+				var fileName;
+				if (teamName !== undefined) {
+					fileName = `${teamName}-reviews.csv`;
+				} else {
+					fileName = "all-reviews.csv";
+				}
 
-            result += item[key];
-            ctr++;
-        });
-        result += lineDelimiter;
-    });
-
-    return result;
-  }
-
-  $scope.downloadCSV = function(args) {
-    var data, filename, link;
-
-    var csv = convertArrayOfObjectsToCSV({
-        data: teamsForCSV
-    });
-    if (csv == null){
-        window.alert("No Evaulation Report Available");
-        return;
-    }
-
-    filename = args.filename || 'export.csv';
-
-    if (!csv.match(/^data:text\/csv/i)) {
-        csv = 'data:text/csv;charset=utf-8,' + csv;
-    }
-    data = encodeURI(csv);
-
-    link = document.createElement('a');
-    link.setAttribute('href', data);
-    link.setAttribute('download', filename);
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
-  $scope.downloadFullCSV = function(args) {
-    var data, filename, link;
-    var csv = convertArrayOfObjectsToCSV({
-      data: fullCSV
-    });
-    if (csv == null){
-        window.alert("No Evaulation Report Available");
-        return;
-    }
-    filename = args.filename || 'export.csv';
-     if (!csv.match(/^data:text\/csv/i)) {
-          csv = 'data:text/csv;charset=utf-8,' + csv;
-      }
-      data = encodeURI(csv);
-
-      link = document.createElement('a');
-      link.setAttribute('href', data);
-      link.setAttribute('download', filename);
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-  }
-
-  $scope.downloadTeamCSV = function(args) {
-    var data, filename, link, index;
-    index = args.index;
-    console.log(index);
-    var csv = convertArrayOfObjectsToCSV({
-      data: teamArray[index]
-    });
-    if (csv == null){
-      window.alert("No Evaulation Report Available");
-      return;
-    }
-    filename = args.filename || 'export.csv';
-     if (!csv.match(/^data:text\/csv/i)) {
-          csv = 'data:text/csv;charset=utf-8,' + csv;
-      }
-      data = encodeURI(csv);
-
-      link = document.createElement('a');
-      link.setAttribute('href', data);
-      link.setAttribute('download', filename);
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-});
+				downloadCSV(convertDataToCSV(detailHeader, allReviews), fileName);
+			});
+		}
+	});

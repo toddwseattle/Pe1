@@ -1,34 +1,22 @@
 .login_container {
- 	padding: 0;
- 	background: rgb(103, 58, 183);
- }
-.logo{
+	padding: 0;
+	background: rgb(103, 58, 183);
+}
+
+.logo {
 	width: 100%;
 }
 
-.login_form { 	
- 	text-align:center;
+.login_form {
+	text-align: center;
 }
 
 .form_body {
-	background:rgba(255,255,255, 0.9);
-	padding:20px;	
+	background: rgba(255, 255, 255, 0.9);
+	padding: 20px;
 }
 
 .form-control {
 	width: 100%;
 	margin-bottom: 10px;
 }
-
-hr {
-    border-top: 1px solid rgba(103, 58, 183, 0.3);
-}
-
-.btn-primary {
-	background: rgb(103, 58, 183)!important;
-	font-size: 16px;
-	border: #4e2a84;
-}
-/*.right_space {
-	background: rgb(103, 58, 183);
-}*/

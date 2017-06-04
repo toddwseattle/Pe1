@@ -1,13 +1,20 @@
-/* app css stylesheet */
+hr {
+  border-top: 1px solid rgba(103, 58, 183, 0.3);
+}
 
-.metric {
-  /*text-align: center;*/
+.btn-primary {
+  background: rgb(103, 58, 183) !important;
+  font-size: 16px;
+  border: none !important;
 }
-.value {
-  /*text-align: center;*/
+
+.btn-primary:hover {
+  background-color: #4e2a84 !important;
+  border-color: #401f68 !important;
 }
-.comment {
-  /*text-indent: 10px;*/
+
+li {
+  list-style-type: none;
 }
 
 .logo_text {
@@ -15,22 +22,19 @@
   float: left;
 }
 
-
-.nav{
-	background: white;
+.nav {
+  background: white;
   margin-top: 10px;
   min-height: 40px;
 }
 
-
-
-.container{
+.container {
   background: white;
   width: 100% !important;
   min-height: 100vh;
 }
 
-#title_bar{
+#title_bar {
   background: rgb(103, 58, 183);
 }
 
@@ -51,7 +55,6 @@
   list-style-type: none;
   margin-right: 10px;
   text-align: right;
-
   font-family: "Helvetica";
   line-height: 26px;
 }
@@ -61,7 +64,7 @@
   color: white;
 }
 
-.role{
+.role {
   float: right
 }
 
@@ -69,12 +72,15 @@ a.logout:hover {
   color: gray;
   text-decoration: none;
 }
-.session{
-  font-size:2rem;
+
+.session {
+  font-size: 2rem;
 }
-.session_icon{
+
+.session_icon {
   width: 20px;
 }
-.user_icon{
+
+.user_icon {
   width: 15px;
 }

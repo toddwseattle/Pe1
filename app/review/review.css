@@ -11,8 +11,9 @@ form {
 }
 
 .btn-submit {
+  width: 100%;
   padding: 10px;
-  float: right;
+  margin-bottom: 40px !important;
 }
 
 #teams-list {
@@ -21,105 +22,20 @@ form {
   padding-left: 15px;
 }
 
-#teams-list h4{
-	float: left;
+#teams-list h4 {
+  float: left;
 }
 
-#team-select{
-    float: left;
-    width: 30%;
-    margin-left: 20px;
+#team-select {
+  float: left;
+  width: 30%;
+  margin-left: 20px;
 }
 
-#grader-name-label {
-  width: 29%;
-}
-
-#grader-name-input {
-    float: left;
-    width: 70%;
-    margin-left: 1%;
-}
-
-#slide-text1{
-  display: none;
-  font-weight: bold;
-}
-
-#slide-text2{
-  display: none;
-  font-weight: bold;
-}
-
-.ratingslider label {
-    position: absolute;
-    width: 20px;
-    margin-left: -10px;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.input-textarea{
-	display: none
-	margin-top: 4%
-}
-
-.dropdown {
-  display: inline;
-}
-
-.name {
-  font-weight: bold;
-}
-.product {
-  text-indent: 10px;
-  font-style: italic;
-}
-
-
-/*================sliders=====================*/
-
-.ui-slider {
-  width: 100%; /* Specific width is required for Firefox. */
-  background: transparent; /* Otherwise white in Chrome */
-}
-
-
-.ui-slider:focus {
-  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
-}
-
-/*styling for Thumb*/
-
-.ui-slider-horizontal .ui-state-default {
-	background: #673AB7;
-  border:0;
-}
-
-/* Special styling for WebKit/Blink */
-.ui-slider-handle {
-  -webkit-appearance: none;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 50% !important;
-  background: #ffffff;
-  cursor: pointer;
-  margin-top: 0px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
-}
-
-/*comment button*/
-
-.btn_cmt{
+.btn_cmt {
   margin-top: 15px;
-  margin-left: -3px;
 }
 
-
-
-
-
-
-
-
+.rz-pointer {
+  background-color: rgb(103, 58, 183) !important;
+}
